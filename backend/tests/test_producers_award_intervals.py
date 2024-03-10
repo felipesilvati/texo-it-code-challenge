@@ -121,3 +121,49 @@ def test_various_intervals(client):
     # Assert that the max interval is correctly identified as 8 years (2004 to 2012 for producer2).
     expected_max_interval = {"interval": 8, "previousWin": 2004, "followingWin": 2012}
     assert any(interval for interval in data['max'] if interval["interval"] == expected_max_interval["interval"] and interval["previousWin"] == expected_max_interval["previousWin"] and interval["followingWin"] == expected_max_interval["followingWin"]), "'max' interval does not match the expected outcome."
+
+def test_identical_intervals(client):
+    # Setup: Insert producers with identical award intervals.
+    with flask_app.app_context():
+        # Producers with identical shortest interval of 2 years
+        producer1 = Producer(name="Producer Short 1")
+        producer2 = Producer(name="Producer Short 2")
+        # Producers with identical longest interval of 4 years
+        producer3 = Producer(name="Producer Long 1")
+        producer4 = Producer(name="Producer Long 2")
+        db.session.add_all([producer1, producer2, producer3, producer4])
+        
+        # Producer 1 and 2 setup for shortest interval of 2 years
+        years_short = [2010, 2012]  # Interval: 2
+        for year in years_short:
+            movie = Movie(title=f"Short Interval Movie {year}", year=year)
+            db.session.add(movie)
+            db.session.commit()
+            movie.producers.extend([producer1, producer2])
+            award = Award(movie_id=movie.id, is_winner=True)
+            db.session.add(award)
+        
+        # Producer 3 and 4 setup for longest interval of 4 years
+        years_long = [2000, 2004]  # Interval: 4
+        for year in years_long:
+            movie = Movie(title=f"Long Interval Movie {year}", year=year)
+            db.session.add(movie)
+            db.session.commit()
+            movie.producers.extend([producer3, producer4])
+            award = Award(movie_id=movie.id, is_winner=True)
+            db.session.add(award)
+
+        db.session.commit()
+
+    # Test: GET /api/producers/award-intervals
+    response = client.get('/api/producers/award-intervals')
+    assert response.status_code == 200
+    data = response.json
+
+    # Assert that both shortest interval producers are correctly identified.
+    min_intervals = data['min']
+    assert len([interval for interval in min_intervals if interval["interval"] == 2 and interval["producer"] in ["Producer Short 1", "Producer Short 2"]]) == 2, "Not all producers with the shortest interval are returned."
+
+    # Assert that both longest interval producers are correctly identified.
+    max_intervals = data['max']
+    assert len([interval for interval in max_intervals if interval["interval"] == 4 and interval["producer"] in ["Producer Long 1", "Producer Long 2"]]) == 2, "Not all producers with the longest interval are returned."
