@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from config import Config
 from utils.ingest_csv import ingest_csv_to_db
 from models import db, Movie
+from queries.calculate_award_intervals import calculate_award_intervals
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -15,24 +16,19 @@ with app.app_context():
 
 load_dotenv()
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/api/healthcheck', methods=['GET'])
+def healthcheck():
+    try:
+        db.session.query(Movie.id).first()
+        return jsonify({"status": "healthy", "db": "up"}), 200
+    except Exception as e:
+        app.logger.error(f"Health check failed: {e}")
+        return jsonify({"status": "unhealthy", "db": "down"}), 500
 
-@app.route('/movies')
-def list_movies():
-    movies = Movie.query.all()
-    movies_info = []
-    for movie in movies:
-        movies_info.append({
-            "title": movie.title,
-            "year": movie.year,
-            "studios": [studio.name for studio in movie.studios],
-            "producers": [producer.name for producer in movie.producers],
-            "winner": any(award.is_winner for award in movie.awards)
-        })
-    return jsonify(movies_info)
-
+@app.route('/api/producers/award-intervals', methods=['GET'])
+def get_producer_award_intervals():
+    intervals = calculate_award_intervals()
+    return jsonify(intervals)
 
 if __name__ == '__main__':
     csv_path = os.getenv('CSV_PATH')
