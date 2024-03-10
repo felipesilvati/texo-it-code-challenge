@@ -38,4 +38,4 @@ if __name__ == '__main__':
     csv_path = os.getenv('CSV_PATH')
     if csv_path:
         ingest_csv_to_db(csv_path, app, db)
-    app.run(debug=True)
+    app.run(port=8000, debug=True)
