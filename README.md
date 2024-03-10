@@ -14,8 +14,8 @@ Fullstack solution using Python and React
 - [x] Integrate an in-memory database (SQLite or similar)
 
 ### Data Import
-- [ ] Implement CSV data reading and parsing functionality
-- [ ] Insert movie data into the database on application startup
+- [x] Implement CSV data reading and parsing functionality
+- [x] Insert movie data into the database on application startup
 
 ### API Development
 - [ ] Create endpoint to fetch producers with maximum and minimum intervals between awards
