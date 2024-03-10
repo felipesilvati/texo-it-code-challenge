@@ -19,12 +19,9 @@ load_dotenv()
 @app.route('/api/healthcheck', methods=['GET'])
 def healthcheck():
     try:
-        # Attempt to query the database
         db.session.query(Movie.id).first()
-        # If the above line succeeds, the database is up and reachable
         return jsonify({"status": "healthy", "db": "up"}), 200
     except Exception as e:
-        # If an exception occurs, the database is not reachable
         app.logger.error(f"Health check failed: {e}")
         return jsonify({"status": "unhealthy", "db": "down"}), 500
 
