@@ -1,6 +1,10 @@
 # texo-it-code-challenge
 Fullstack solution using Python and React
 
+## Features
+- [Backend](backend/README.md) API to fetch producers with maximum and minimum intervals between awards
+- [Frontend](frontend/README.md) dashboard to display the results and a movie list view with pagination and filters
+
 # Todo List
 
 ## Backend
@@ -26,7 +30,7 @@ Fullstack solution using Python and React
 - [x] Write integration tests for API endpoints
 
 ### Documentation
-- [ ] Document setup, API endpoints, and usage instructions
+- [x] Document setup, API endpoints, and usage instructions
 
 ## Frontend
 
