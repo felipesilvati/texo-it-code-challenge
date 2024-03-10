@@ -18,12 +18,12 @@ Fullstack solution using Python and React
 - [x] Insert movie data into the database on application startup
 
 ### API Development
-- [ ] Create endpoint to fetch producers with maximum and minimum intervals between awards
-- [ ] Ensure the API conforms to the level 2 of Richardson Maturity Model
+- [x] Create endpoint to fetch producers with maximum and minimum intervals between awards
+- [x] Ensure the API conforms to the level 2 of Richardson Maturity Model
 - [ ] Implement additional API filtering capabilities as required
 
 ### Testing
-- [ ] Write integration tests for API endpoints
+- [x] Write integration tests for API endpoints
 
 ### Documentation
 - [ ] Document setup, API endpoints, and usage instructions
@@ -45,9 +45,6 @@ Fullstack solution using Python and React
 
 ### Responsiveness
 - [ ] Ensure UI is responsive with a minimum resolution of 768x1280
-
-### Integration
-- [ ] Connect frontend with backend to dynamically fetch and display data
 
 ### Testing
 - [ ] Write unit tests for UI components and functionality
