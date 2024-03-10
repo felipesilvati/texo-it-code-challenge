@@ -31,6 +31,7 @@ def get_producer_award_intervals():
         intervals = calculate_award_intervals()
         return jsonify(intervals)
     except Exception as e:
+        app.logger.error(f"Failed to calculate award intervals: {e}")
         return make_response(jsonify({"error": "Internal Server Error"}), 500)
 
 if __name__ == '__main__':
