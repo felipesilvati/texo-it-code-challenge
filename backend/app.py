@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from config import Config
 from utils.ingest_csv import ingest_csv_to_db
 from models import db, Movie
@@ -27,8 +27,11 @@ def healthcheck():
 
 @app.route('/api/producers/award-intervals', methods=['GET'])
 def get_producer_award_intervals():
-    intervals = calculate_award_intervals()
-    return jsonify(intervals)
+    try:
+        intervals = calculate_award_intervals()
+        return jsonify(intervals)
+    except Exception as e:
+        return make_response(jsonify({"error": "Internal Server Error"}), 500)
 
 if __name__ == '__main__':
     csv_path = os.getenv('CSV_PATH')

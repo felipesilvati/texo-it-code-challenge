@@ -1,6 +1,7 @@
 import pytest
 from app import app as flask_app, db
 from models import Producer, Movie, Award, MovieProducer, Studio, MovieStudio
+from sqlalchemy.exc import OperationalError
 
 @pytest.fixture
 def app():
@@ -167,3 +168,14 @@ def test_identical_intervals(client):
     # Assert that both longest interval producers are correctly identified.
     max_intervals = data['max']
     assert len([interval for interval in max_intervals if interval["interval"] == 4 and interval["producer"] in ["Producer Long 1", "Producer Long 2"]]) == 2, "Not all producers with the longest interval are returned."
+
+def test_error_handling(client, monkeypatch):
+    def mock_query(*args, **kwargs):
+        raise OperationalError("mocked error", "mocked params", "mocked orig")
+    # Mock calculate_award_intervals to raise an exception
+    monkeypatch.setattr(db.session, 'query', mock_query)
+
+    response = client.get('/api/producers/award-intervals')
+    assert response.status_code == 500
+    assert "error" in response.json
+
