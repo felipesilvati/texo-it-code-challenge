@@ -35,8 +35,8 @@ Fullstack solution using Python and React
 ## Frontend
 
 ### Project Setup
-- [ ] Initialize React project with necessary tooling
-- [ ] Install essential libraries 
+- [x] Initialize React project with necessary tooling
+- [x] Install essential libraries 
 
 ### UI Development
 - [ ] Implement navigation menu for switching between views
