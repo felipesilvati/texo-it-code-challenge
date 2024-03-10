@@ -10,8 +10,8 @@ Fullstack solution using Python and React
 - [x] Initialize Flask project for RESTful API development
 
 ### Database Setup
-- [ ] Design the database schema for movies data
-- [ ] Integrate an in-memory database (SQLite or similar)
+- [x] Design the database schema for movies data
+- [x] Integrate an in-memory database (SQLite or similar)
 
 ### Data Import
 - [ ] Implement CSV data reading and parsing functionality
