@@ -12,7 +12,7 @@ export default function App() {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        retry: false,
+        retry: 1,
         keepPreviousData: true,
       },
     },

@@ -18,7 +18,6 @@ export default function ListMovieWinnersByYear() {
     onError: (error) => console.error(error),
     enabled: isSearchYearValid && searchActive,
     onSettled: () => setSearchActive(false),
-    retry: 1,
   });
 
   if (isError) {
