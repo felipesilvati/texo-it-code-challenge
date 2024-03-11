@@ -19,7 +19,6 @@ export default function ListMovieWinnersByYear() {
     enabled: isSearchYearValid && searchActive,
     onSettled: () => setSearchActive(false),
     retry: 1,
-    keepPreviousData: true,
   });
 
   if (isError) {
@@ -35,7 +34,7 @@ export default function ListMovieWinnersByYear() {
   return (
     <Card style={{ marginTop: 16, width: 550 }} title='List movie winners by year'>
       <Space.Compact style={{ width: '100%', marginBottom: 16 }}>
-        <InputNumber style={{ width: '100%' }} min={1} max={new Date().getFullYear()} defaultValue={1990} onChange={setSearchYear} value={searchYear} placeholder='Search by year' />
+        <InputNumber style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' />
         <Button type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
       </Space.Compact>
       <Table

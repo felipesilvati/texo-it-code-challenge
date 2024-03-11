@@ -8,7 +8,15 @@ import ProducersWithLongestAndShortest from '@/components/ProducersWithLongestAn
 import ListMovieWinnersByYear from '@/components/ListMovieWinnersByYear';
 
 export default function App() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+        keepPreviousData: true,
+      },
+    },
+  })
   return (
     <QueryClientProvider client={queryClient}>
       <Dashboard />
