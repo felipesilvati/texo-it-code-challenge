@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import YearsWithMultipleWinnersTable from '@/components/YearsWithMultipleWinnersTable';
 import TopThreeStudiosWithWinnersTable from '@/components/TopThreeStudiosWithWinnersTable';
 import { Flex } from 'antd'
+import ProducersWithLongestAndShortest from '@/components/ProducersWithLongestAndShortest';
 
 export default function App() {
   const queryClient = new QueryClient()
@@ -22,6 +23,8 @@ function Dashboard() {
         <YearsWithMultipleWinnersTable />
         <TopThreeStudiosWithWinnersTable />
       </Flex>
+
+      <ProducersWithLongestAndShortest />
     </Layout>
   );
 }
