@@ -17,7 +17,7 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Title style={{ width: '100%', background: '#ececec', padding: '20px', fontSize: '1.5em' }}>
+      <Title style={{ width: '100%', background: '#ececec', padding: '16px', fontSize: '1.5em' }}>
         Frontend React Test
       </Title>
       <div style={{ display: 'flex', minHeight: '100vh' }}>
@@ -30,7 +30,7 @@ export default function Layout({ children }) {
             style={{ height: '100%', borderRight: 0 }}
           />
         </aside>
-        <main style={{ flexGrow: 1, padding: '20px' }}>
+        <main style={{ flexGrow: 1, padding: '16px' }}>
           {children}
         </main>
       </div>
