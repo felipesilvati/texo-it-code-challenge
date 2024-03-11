@@ -1,10 +1,10 @@
 import React from 'react';
-import { Typography, Table, Spin } from 'antd';
+import { Card, Typography, Table, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 export default function TopThreeStudiosWithWinnersTable() {
   const { data, isLoading, isError } = useQuery({
@@ -37,12 +37,13 @@ export default function TopThreeStudiosWithWinnersTable() {
   ];
 
   return (
-    <Table
-      title={() => <Title level={5}>Top 3 studios with winners</Title>}
-      style={{ width: 500 }}
-      dataSource={data}
-      columns={columns}
-      pagination={{ hideOnSinglePage: true }}
-    />
+    <Card style={{ width: 550 }} title='Top 3 studios with winners'>
+      <Table
+        style={{ width: 500 }}
+        dataSource={data}
+        columns={columns}
+        pagination={{ hideOnSinglePage: true }}
+      />
+    </Card>
   );
 }
