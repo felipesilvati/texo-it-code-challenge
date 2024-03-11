@@ -6,12 +6,12 @@ import { BASE_API_URL } from '@/utils/constants';
 
 const { Text, Title } = Typography;
 
-export default function YearsWithMultipleWinnersTable () {
+export default function TopThreeStudiosWithWinnersTable() {
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
-      .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
-      .then((res) => res.data?.years),
-    queryKey: ['yearsWithMultipleWinners'],
+      .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
+      .then((res) => res.data?.studios?.slice(0, 3)),
+    queryKey: ['studiosWithWinCount'],
     onError: (error) => console.error(error),
   });
 
@@ -20,26 +20,26 @@ export default function YearsWithMultipleWinnersTable () {
   }
 
   if (isError) {
-    return <Text>Failed to load years with multiple winners</Text>;
+    return <Text>Failed to load studios with win count</Text>;
   }
 
   const columns = [
     {
-      title: 'Year',
-      dataIndex: 'year',
-      key: 'year',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
       title: 'Win Count',
-      dataIndex: 'winnerCount',
-      key: 'winnerCount',
+      dataIndex: 'winCount',
+      key: 'winCount',
     },
   ];
 
   return (
     <Table
-      title={() => <Title level={5}>List years with multiple winners</Title>}
-      style={{ width: 350 }}
+      title={() => <Title level={5}>Top 3 studios with winners</Title>}
+      style={{ width: 500 }}
       dataSource={data}
       columns={columns}
       pagination={{ hideOnSinglePage: true }}

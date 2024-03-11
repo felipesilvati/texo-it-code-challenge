@@ -30,7 +30,7 @@ export default function Layout({ children }) {
             style={{ height: '100%', borderRight: 0 }}
           />
         </aside>
-        <main style={{ flexGrow: 1, padding: '16px' }}>
+        <main style={{ flexGrow: 1, padding: '0 16px' }}>
           {children}
         </main>
       </div>

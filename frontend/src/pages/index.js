@@ -2,6 +2,8 @@
 import Layout from '@/components/layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import YearsWithMultipleWinnersTable from '@/components/YearsWithMultipleWinnersTable';
+import TopThreeStudiosWithWinnersTable from '@/components/TopThreeStudiosWithWinnersTable';
+import { Flex } from 'antd'
 
 export default function App() {
   const queryClient = new QueryClient()
@@ -16,7 +18,10 @@ export default function App() {
 function Dashboard() {
   return (
     <Layout>
-      <YearsWithMultipleWinnersTable />
+      <Flex gap='large'>
+        <YearsWithMultipleWinnersTable />
+        <TopThreeStudiosWithWinnersTable />
+      </Flex>
     </Layout>
   );
 }
