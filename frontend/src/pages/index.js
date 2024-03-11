@@ -1,9 +1,9 @@
 'use client';
 import Layout from '@/components/layout';
-import { Typography } from 'antd';
+import { Typography, Spin, Table } from 'antd';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const baseApiUrl = 'https://tools.texoit.com/backend-java/api/movies'
 
@@ -23,10 +23,35 @@ function Dashboard() {
     queryKey: ['yearsWithMultipleWinners'],
   })
 
+  const maybeRenderYearsWithMultipleWinners = () => {
+    if (yearsWithMultipleWinners.isLoading) {
+      return <Spin />
+    }
+
+    if (yearsWithMultipleWinners.isError) {
+      return <Text>Failed to load years with multiple winners</Text>
+    }
+
+    const columns = [
+      {
+        title: 'Year',
+        dataIndex: 'year',
+        key: 'year',
+      },
+      {
+        title: 'Win Count',
+        dataIndex: 'winnerCount',
+        key: 'winnerCount',
+      },
+
+    ]
+
+    return <Table title={() => <Title level={5}>List Winners with Multiple Winners</Title>} style={{ width: 350 }} dataSource={yearsWithMultipleWinners?.data?.data?.years} columns={columns} pagination={{hideOnSinglePage: true}} />
+  }
+
   return (
     <Layout>
-      <Text>Dashboard Page Here</Text>
-      <div>{JSON.stringify(yearsWithMultipleWinners?.data)}</div>
+      {maybeRenderYearsWithMultipleWinners()}
     </Layout>
   );
 }
