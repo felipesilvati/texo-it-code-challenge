@@ -46,7 +46,14 @@ function Dashboard() {
 
     ]
 
-    return <Table title={() => <Title level={5}>List Winners with Multiple Winners</Title>} style={{ width: 350 }} dataSource={yearsWithMultipleWinners?.data?.data?.years} columns={columns} pagination={{hideOnSinglePage: true}} />
+    return (
+      <Table
+        title={() => <Title level={5}>List Winners with Multiple Winners</Title>}
+        style={{ width: 350 }}
+        dataSource={yearsWithMultipleWinners?.data?.data?.years}
+        columns={columns}
+        pagination={{ hideOnSinglePage: true }}
+      />)
   }
 
   return (
