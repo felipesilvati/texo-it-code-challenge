@@ -5,6 +5,8 @@ Fullstack solution using Python and React
 - [Backend](backend/README.md) API to fetch producers with maximum and minimum intervals between awards
 - [Frontend](frontend/README.md) dashboard to display the results and a movie list view with pagination and filters
 
+Please read the respective README files for detailed instructions on setting up and running the backend and frontend and the rationale behind the design and implementation.
+
 # Todo List
 
 ## Backend
@@ -35,11 +37,11 @@ Fullstack solution using Python and React
 ## Frontend
 
 ### Project Setup
-- [ ] Initialize React project with necessary tooling
-- [ ] Install essential libraries 
+- [x] Initialize React project with necessary tooling
+- [x] Install essential libraries 
 
 ### UI Development
-- [ ] Implement navigation menu for switching between views
+- [x] Implement navigation menu for switching between views
 - [ ] Develop the dashboard view with required panels
   - [ ] Years with more than one winner
   - [ ] Top three studios by wins
