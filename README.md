@@ -39,7 +39,7 @@ Fullstack solution using Python and React
 - [x] Install essential libraries 
 
 ### UI Development
-- [ ] Implement navigation menu for switching between views
+- [x] Implement navigation menu for switching between views
 - [ ] Develop the dashboard view with required panels
   - [ ] Years with more than one winner
   - [ ] Top three studios by wins
