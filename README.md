@@ -46,7 +46,7 @@ Please read the respective README files for detailed instructions on setting up 
   - [x] Years with more than one winner
   - [x] Top three studios by wins
   - [x] Producers with longest and shortest win intervals
-  - [ ] Searchable winners by year
+  - [x] Searchable winners by year
 - [ ] Refactor the layout
 - [ ] Extract useQuery hooks to a separate file
 - [ ] Create the movie list view with pagination and filters (year, winner)
