@@ -10,7 +10,7 @@ export default function YearsWithMultipleWinnersTable () {
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
       .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
-      .then((res) => res.data),
+      .then((res) => res.data?.years),
     queryKey: ['yearsWithMultipleWinners'],
     onError: (error) => console.error(error),
   });
@@ -38,9 +38,9 @@ export default function YearsWithMultipleWinnersTable () {
 
   return (
     <Table
-      title={() => <Title level={5}>List winners with multiple winners</Title>}
+      title={() => <Title level={5}>List years with multiple winners</Title>}
       style={{ width: 350 }}
-      dataSource={data?.years}
+      dataSource={data}
       columns={columns}
       pagination={{ hideOnSinglePage: true }}
     />
