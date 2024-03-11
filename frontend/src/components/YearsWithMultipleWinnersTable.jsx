@@ -1,12 +1,12 @@
 import React from 'react';
-import { Typography, Table, Spin } from 'antd';
+import { Card, Typography, Table, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 
 const { Text, Title } = Typography;
 
-export default function YearsWithMultipleWinnersTable () {
+export default function YearsWithMultipleWinnersTable() {
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
       .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
@@ -37,12 +37,13 @@ export default function YearsWithMultipleWinnersTable () {
   ];
 
   return (
-    <Table
-      title={() => <Title level={5}>List years with multiple winners</Title>}
-      style={{ width: 350 }}
-      dataSource={data}
-      columns={columns}
-      pagination={{ hideOnSinglePage: true }}
-    />
+    <Card style={{ width: 550 }} title='List years with multiple winners'>
+      <Table
+        style={{ width: 500 }}
+        dataSource={data}
+        columns={columns}
+        pagination={{ hideOnSinglePage: true }}
+      />
+    </Card>
   );
 }
