@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 export default function TopThreeStudiosWithWinnersTable() {
   const { data, isLoading, isError } = useQuery({
