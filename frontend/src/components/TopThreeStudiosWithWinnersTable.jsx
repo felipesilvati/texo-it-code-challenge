@@ -10,7 +10,7 @@ export default function TopThreeStudiosWithWinnersTable() {
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
       .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
-      .then((res) => res.data?.studios),
+      .then((res) => res.data?.studios?.slice(0, 3)),
     queryKey: ['studiosWithWinCount'],
     onError: (error) => console.error(error),
   });
@@ -40,7 +40,7 @@ export default function TopThreeStudiosWithWinnersTable() {
     <Table
       title={() => <Title level={5}>Top 3 studios with winners</Title>}
       style={{ width: 500 }}
-      dataSource={data?.slice(0, 3)}
+      dataSource={data}
       columns={columns}
       pagination={{ hideOnSinglePage: true }}
     />
