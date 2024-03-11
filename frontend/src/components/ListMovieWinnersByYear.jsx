@@ -10,7 +10,7 @@ export default function ListMovieWinnersByYear() {
   const [searchYear, setSearchYear] = useState('');
   const [searchActive, setSearchActive] = useState(false);
   const isSearchYearValid = !!searchYear && !isNaN(searchYear) && parseInt(searchYear, 10) > 0;
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryFn: () => axios
       .get(`${BASE_API_URL}/?winner=true&year=${searchYear}`)
       .then((res) => res.data),
@@ -18,7 +18,7 @@ export default function ListMovieWinnersByYear() {
     onError: (error) => console.error(error),
     enabled: isSearchYearValid && searchActive,
     onSettled: () => setSearchActive(false),
-    retry: false,
+    retry: 1,
     keepPreviousData: true,
   });
 
@@ -35,7 +35,7 @@ export default function ListMovieWinnersByYear() {
   return (
     <Card style={{ marginTop: 16, width: 550 }} title='List movie winners by year'>
       <Space.Compact style={{ width: '100%', marginBottom: 16 }}>
-        <InputNumber style={{ width: '100%' }} min={1} max={3000} defaultValue={1990} onChange={setSearchYear} value={searchYear} placeholder='Search by year' />
+        <InputNumber style={{ width: '100%' }} min={1} max={new Date().getFullYear()} defaultValue={1990} onChange={setSearchYear} value={searchYear} placeholder='Search by year' />
         <Button type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
       </Space.Compact>
       <Table
