@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 import Layout from '@/components/Layout';
+import { constructQueryString } from '@/utils/helpers';
 const { Text } = Typography;
 
 export default function Movies() {
