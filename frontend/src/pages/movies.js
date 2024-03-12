@@ -16,23 +16,20 @@ export default function Movies() {
   const [size, setSize] = useState(10);
   const [year, setYear] = useState(null);
   const [winner, setWinner] = useState(null);
-  const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
   const queryParams = { page, size, year, winner };
   const queryString = constructQueryString(queryParams);
 
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
+  const handleSearch = (value, dataIndex) => {
+    setYear(value);
     setSearchedColumn(dataIndex);
   };
 
   const handleReset = () => {
-    setSearchText('');
-    setSearchedColumn('');
     setYear(null);
+    setSearchedColumn(null);
   };
 
   const { data, isLoading, isError } = useQuery({
@@ -67,7 +64,7 @@ export default function Movies() {
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
-      setSelectedKeys, selectedKeys, confirm, clearFilters, close
+      setSelectedKeys, selectedKeys, close
     }) => (
       <FilterDropdown
         ref={searchInput}
@@ -75,7 +72,6 @@ export default function Movies() {
         setSelectedKeys={setSelectedKeys}
         selectedKeys={selectedKeys}
         confirm={confirm}
-        clearFilters={clearFilters}
         handleSearch={handleSearch}
         handleReset={handleReset}
         close={close}
@@ -102,7 +98,7 @@ export default function Movies() {
             backgroundColor: '#ffc069',
             padding: 0,
           }}
-          searchWords={[searchText]}
+          searchWords={[year]}
           autoEscape
           textToHighlight={text ? text.toString() : ''}
         />
