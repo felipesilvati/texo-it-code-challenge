@@ -50,6 +50,7 @@ Please read the respective README files for detailed instructions on setting up 
 - [ ] Create the movie list view with pagination and filters (year, winner)
 - [ ] Refactor the layout
 - [ ] Extract useQuery hooks to a separate file
+- [ ] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness
 - [ ] Ensure UI is responsive with a minimum resolution of 768x1280
