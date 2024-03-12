@@ -11,31 +11,25 @@ export default function Movies() {
   const [page, setPage] = useState(0);
   const [year, setYear] = useState(null);
   const [winner, setWinner] = useState(null);
-  const maybeYear = year ? `&year=${year}` : '';
-  const maybeWinner = winner ? `&winner=${winner}` : '';
+  const queryParams = { page, size: 10, year, winner };
+  const queryString = constructQueryString(queryParams);
+
   const { data, isLoading, isError } = useQuery({
-    queryFn: () => axios
-      .get(`${BASE_API_URL}?page=${page}&size=10${maybeYear}${maybeWinner}`)
-      .then((res) => res.data),
-    queryKey: ['listMovies', page, year, winner],
+    queryFn: () => axios.get(`${BASE_API_URL}?${queryString}`).then(res => res.data),
+    queryKey: ['listMovies', queryString],
     onError: (error) => console.error(error),
   });
 
   const handleTableChange = (pagination, filters, sorter) => {
-    console.log({ pagination, filters, sorter });
     setPage(pagination.current - 1);
-    if (filters?.year) {
-      setYear(filters.year[0])
-      setPage(0)
-    } else {
-      setYear(null)
-    }
 
-    if (filters?.winner) {
-      setWinner(filters.winner[0])
-      setPage(0)
-    } else {
-      setWinner(null)
+    const newYear = filters.year?.[0] || null;
+    const newWinner = filters.winner?.[0] || null;
+
+    if (newYear !== year || newWinner !== winner) {
+      setPage(0);
+      setYear(newYear);
+      setWinner(newWinner);
     }
   };
 
