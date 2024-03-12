@@ -10,11 +10,14 @@ const { Text } = Typography;
 export default function Movies() {
   const [page, setPage] = useState(0);
   const [year, setYear] = useState(null);
+  const [winner, setWinner] = useState(null);
+  const maybeYear = year ? `&year=${year}` : '';
+  const maybeWinner = winner ? `&winner=${winner}` : '';
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
-      .get(`${BASE_API_URL}?page=${page}&size=10${year ? `&year=${year}` : ''}`)
+      .get(`${BASE_API_URL}?page=${page}&size=10${maybeYear}${maybeWinner}`)
       .then((res) => res.data),
-    queryKey: ['listMovies', page, year],
+    queryKey: ['listMovies', page, year, winner],
     onError: (error) => console.error(error),
   });
 
@@ -26,6 +29,13 @@ export default function Movies() {
       setPage(0)
     } else {
       setYear(null)
+    }
+
+    if (filters?.winner) {
+      setWinner(filters.winner[0])
+      setPage(0)
+    } else {
+      setWinner(null)
     }
   };
 
@@ -48,7 +58,10 @@ export default function Movies() {
       filters: Array.from(new Set(data?.content?.map(movie => movie.year))).map(year => ({ text: year, value: year })),
     },
     { title: 'Title', dataIndex: "title", key: "title" },
-    { title: 'Winner?', dataIndex: "winner", key: "winner", render: (winner) => winner ? 'Yes' : 'No' },
+    {
+      title: 'Winner?', dataIndex: "winner", key: "winner", render: (winner) => winner ? 'Yes' : 'No',
+      filters: [{ text: 'Yes', value: true }, { text: 'No', value: false }],
+    },
   ];
 
   return (
