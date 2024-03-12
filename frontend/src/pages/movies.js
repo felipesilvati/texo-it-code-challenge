@@ -77,13 +77,16 @@ export default function Movies() {
         close={close}
       />
     ),
-    filterIcon: (filtered) => (
-      <SearchOutlined
-        style={{
-          color: filtered ? '#1677ff' : undefined,
-        }}
-      />
-    ),
+    filterIcon: () => {
+      const isActiveFilter = dataIndex === 'year' ? year !== null : dataIndex === 'winner' ? winner !== null : false;
+      return (
+        <SearchOutlined
+          style={{
+            color: isActiveFilter ? '#1677ff' : undefined,
+          }}
+        />
+      )
+    },
     onFilter: (value, record) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
     onFilterDropdownOpenChange: (visible) => {
