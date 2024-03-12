@@ -8,7 +8,7 @@ import Layout from '@/components/Layout';
 const { Text } = Typography;
 
 export default function Movies() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios
       .get(`${BASE_API_URL}?page=${page}&size=10`)
@@ -16,6 +16,10 @@ export default function Movies() {
     queryKey: ['listMovies', page],
     onError: (error) => console.error(error),
   });
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    setPage(pagination.current - 1);
+  };
 
   if (isLoading) {
     return <Spin />;
@@ -25,11 +29,13 @@ export default function Movies() {
     return <Text>Failed to  load movies</Text>;
   }
 
+  const { totalElements } = data || {};
+
   const columns = [
     { title: 'Id', dataIndex: 'id', key: 'id' },
     { title: "Year", dataIndex: "year", key: "year" },
     { title: 'Title', dataIndex: "title", key: "title" },
-    { title: 'Winner?', dataIndex: "winner", key: "winner", render: (winner) => winner ? 'Yes' : 'No'},
+    { title: 'Winner?', dataIndex: "winner", key: "winner", render: (winner) => winner ? 'Yes' : 'No' },
   ];
 
   return (
@@ -38,7 +44,8 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{ hideOnSinglePage: true }}
+          pagination={{ total: totalElements, showSizeChanger: false }}
+          onChange={handleTableChange}
         />
       </Card >
     </Layout>
