@@ -1,7 +1,7 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { Button, Space, Input, Typography, Table, Card, Spin } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Button, Radio, Typography, Table, Card, Spin } from 'antd';
+import { SearchOutlined, FilterOutlined, FilterFilled } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
@@ -29,12 +29,13 @@ export default function Movies() {
 
   const handleReset = () => {
     setYear(null);
+    setWinner(null);
     setSearchedColumn(null);
   };
 
   const { data, isLoading, isError } = useQuery({
     queryFn: () => axios.get(`${BASE_API_URL}?${queryString}`).then(res => res.data),
-    queryKey: ['listMovies', queryString],
+    queryKey: ['listMovies', queryString, searchedColumn],
     onError: (error) => console.error(error),
   });
 
@@ -120,7 +121,42 @@ export default function Movies() {
     },
     { title: 'Title', dataIndex: "title", key: "title" },
     {
-      title: 'Winner?', dataIndex: "winner", key: "winner", render: (winner) => winner ? 'Yes' : 'No',
+      title: 'Winner?',
+      dataIndex: "winner",
+      key: "winner",
+      render: (winner) => winner ? 'Yes' : 'No',
+      filterIcon: () => {
+        const isActiveFilter = winner !== null;
+        if (isActiveFilter) {
+          return <FilterFilled />
+        } else {
+          return <FilterOutlined style={{ color: '#bfbfbf' }} />
+        }
+      },
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+        <div style={{ padding: 8 }}>
+          <Radio.Group
+            onChange={e => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+              confirm();
+            }}
+            value={selectedKeys[0]}
+          >
+            <Radio value="true">Yes</Radio>
+            <Radio value="false">No</Radio>
+          </Radio.Group>
+          <Button
+            onClick={() => {
+              setSelectedKeys([]);
+              handleReset();
+            }}
+            size="small"
+            style={{ width: 90, marginTop: 8 }}
+          >
+            Reset
+          </Button>
+        </div>
+      ),
       filters: [{ text: 'Yes', value: true }, { text: 'No', value: false }],
     },
   ];
