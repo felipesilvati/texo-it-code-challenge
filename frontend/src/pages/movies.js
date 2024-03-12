@@ -10,9 +10,10 @@ const { Text } = Typography;
 
 export default function Movies() {
   const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const [year, setYear] = useState(null);
   const [winner, setWinner] = useState(null);
-  const queryParams = { page, size: 10, year, winner };
+  const queryParams = { page, size, year, winner };
   const queryString = constructQueryString(queryParams);
 
   const { data, isLoading, isError } = useQuery({
@@ -23,6 +24,7 @@ export default function Movies() {
 
   const handleTableChange = (pagination, filters, sorter) => {
     setPage(pagination.current - 1);
+    setSize(pagination.pageSize);
 
     const newYear = filters.year?.[0] || null;
     const newWinner = filters.winner?.[0] || null;
@@ -65,7 +67,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{ total: totalElements, showSizeChanger: false }}
+          pagination={{ total: totalElements }}
           onChange={handleTableChange}
         />
       </Card >
