@@ -1,6 +1,6 @@
 'use client';
 import { Flex } from 'antd'
-import Layout from '@/components/layout';
+import Layout from '@/components/Layout';
 import YearsWithMultipleWinnersTable from '@/components/YearsWithMultipleWinnersTable';
 import TopThreeStudiosWithWinnersTable from '@/components/TopThreeStudiosWithWinnersTable';
 import ProducersWithLongestAndShortest from '@/components/ProducersWithLongestAndShortest';
