@@ -7,7 +7,7 @@ import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 import Layout from '@/components/Layout';
 import { constructQueryString } from '@/utils/helpers';
-import FilterDropdown from '@/components/FilterDropdown';
+import YearFilterDropdown from '@/components/YearFilterDropdown';
 import WinnerFilterDropdown from '@/components/WinnerFilterDropdown';
 const { Text } = Typography;
 
@@ -45,7 +45,7 @@ export default function Movies() {
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ close }) => (
-      <FilterDropdown
+      <YearFilterDropdown
         dataIndex="year"
         handleSearch={(value) => {
           setFilters(prev => ({ ...prev, year: value }));

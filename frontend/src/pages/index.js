@@ -1,8 +1,8 @@
 'use client';
 import { Flex } from 'antd'
 import Layout from '@/components/Layout';
-import YearsWithMultipleWinnersTable from '@/components/YearsWithMultipleWinnersTable';
-import TopThreeStudiosWithWinnersTable from '@/components/TopThreeStudiosWithWinnersTable';
+import YearsWithMultipleWinners from '@/components/YearsWithMultipleWinners';
+import TopThreeStudiosWithWinners from '@/components/TopThreeStudiosWithWinners';
 import ProducersWithLongestAndShortest from '@/components/ProducersWithLongestAndShortest';
 import ListMovieWinnersByYear from '@/components/ListMovieWinnersByYear';
 
@@ -10,8 +10,8 @@ export default function Dashboard() {
   return (
     <Layout>
       <Flex gap='large'>
-        <YearsWithMultipleWinnersTable />
-        <TopThreeStudiosWithWinnersTable />
+        <YearsWithMultipleWinners />
+        <TopThreeStudiosWithWinners />
       </Flex>
 
       <Flex gap='large'>
