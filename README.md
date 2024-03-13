@@ -26,7 +26,6 @@ Please read the respective README files for detailed instructions on setting up 
 ### API Development
 - [x] Create endpoint to fetch producers with maximum and minimum intervals between awards
 - [x] Ensure the API conforms to the level 2 of Richardson Maturity Model
-- [ ] Implement additional API filtering capabilities as required
 
 ### Testing
 - [x] Write integration tests for API endpoints
@@ -47,12 +46,12 @@ Please read the respective README files for detailed instructions on setting up 
   - [x] Top three studios by wins
   - [x] Producers with longest and shortest win intervals
   - [x] Searchable winners by year
-- [ ] Create the movie list view with pagination and filters (year, winner)
-- [ ] Refactor the layout
+- [x] Create the movie list view with pagination and filters (year, winner)
 - [ ] Extract useQuery hooks to a separate file
 - [ ] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness
+- [ ] Refactor the layout
 - [ ] Ensure UI is responsive with a minimum resolution of 768x1280
 
 ### Testing
