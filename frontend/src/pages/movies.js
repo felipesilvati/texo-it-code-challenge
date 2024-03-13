@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { Button, Radio, Typography, Table, Card, Spin } from 'antd';
+import { Typography, Table, Card, Spin } from 'antd';
 import { SearchOutlined, FilterOutlined, FilterFilled } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import Layout from '@/components/Layout';
 import Highlighter from 'react-highlight-words';
 import { constructQueryString } from '@/utils/helpers';
 import FilterDropdown from '@/components/FilterDropdown';
+import WinnerFilterDropdown from '@/components/WinnerFilterDropdown';
 const { Text } = Typography;
 
 export default function Movies() {
@@ -19,27 +20,10 @@ export default function Movies() {
   const searchInput = useRef(null);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['listMovies', page, size, filters, searchedColumn],
-    queryFn: () => axios.get(`${BASE_API_URL}?${queryString}`).then(res => res.data),
+    queryKey: ['listMovies', page, size, filters],
+    queryFn: () => axios.get(`${BASE_API_URL}${constructQueryString({ page, size, ...filters })}`).then(res => res.data),
     onError: (error) => console.error(error),
   });
-
-  const queryString = constructQueryString({
-    page,
-    size,
-    year: filters.year,
-    winner: filters.winner,
-  });
-
-  const handleSearch = (value, dataIndex) => {
-    setFilters({ ...filters, [dataIndex]: value });
-    setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = () => {
-    setFilters({ year: null, winner: null });
-    setSearchedColumn(null);
-  };
 
   const handleTableChange = (pagination, antdFilters, sorter) => {
     setPage(pagination.current - 1);
@@ -63,17 +47,16 @@ export default function Movies() {
   const { totalElements } = data || {};
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ confirm, clearFilters, close }) => (
+    filterDropdown: ({ close }) => (
       <FilterDropdown
         dataIndex="year"
         handleSearch={(value) => {
           setFilters(prev => ({ ...prev, year: value }));
-          confirm();
+          close();
         }}
         handleReset={() => {
           setFilters(prev => ({ ...prev, year: null }));
-          clearFilters();
-          confirm();
+          close();
         }}
         close={close}
       />
@@ -133,29 +116,12 @@ export default function Movies() {
           return <FilterOutlined style={{ color: '#bfbfbf' }} />
         }
       },
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
-        <div style={{ padding: 8 }}>
-          <Radio.Group
-            onChange={e => {
-              setSelectedKeys(e.target.value ? [e.target.value] : []);
-              confirm();
-            }}
-            value={selectedKeys[0]}
-          >
-            <Radio value="true">Yes</Radio>
-            <Radio value="false">No</Radio>
-          </Radio.Group>
-          <Button
-            onClick={() => {
-              setSelectedKeys([]);
-              handleReset();
-            }}
-            size="small"
-            style={{ width: 90, marginTop: 8 }}
-          >
-            Reset
-          </Button>
-        </div>
+      filterDropdown: ({ close }) => (
+        <WinnerFilterDropdown
+          close={close}
+          setFilters={setFilters}
+          dataIndex="winner"
+        />
       ),
       filters: [{ text: 'Yes', value: true }, { text: 'No', value: false }],
     },
