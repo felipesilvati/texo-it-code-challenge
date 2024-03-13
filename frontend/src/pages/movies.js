@@ -14,44 +14,43 @@ const { Text } = Typography;
 export default function Movies() {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
-  const [year, setYear] = useState(null);
-  const [winner, setWinner] = useState(null);
+  const [filters, setFilters] = useState({ year: null, winner: null });
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
-  const queryParams = { page, size, year, winner };
-  const queryString = constructQueryString(queryParams);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['listMovies', page, size, filters, searchedColumn],
+    queryFn: () => axios.get(`${BASE_API_URL}?${queryString}`).then(res => res.data),
+    onError: (error) => console.error(error),
+  });
+
+  const queryString = constructQueryString({
+    page,
+    size,
+    year: filters.year,
+    winner: filters.winner,
+  });
 
   const handleSearch = (value, dataIndex) => {
-    setYear(value);
+    setFilters({ ...filters, [dataIndex]: value });
     setSearchedColumn(dataIndex);
   };
 
   const handleReset = () => {
-    setYear(null);
-    setWinner(null);
+    setFilters({ year: null, winner: null });
     setSearchedColumn(null);
   };
 
-  const { data, isLoading, isError } = useQuery({
-    queryFn: () => axios.get(`${BASE_API_URL}?${queryString}`).then(res => res.data),
-    queryKey: ['listMovies', queryString, searchedColumn],
-    onError: (error) => console.error(error),
-  });
-
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination, antdFilters, sorter) => {
     setPage(pagination.current - 1);
     setSize(pagination.pageSize);
 
-    const newYear = filters.year?.[0] || null;
-    const newWinner = filters.winner?.[0] || null;
-
-    if (newYear !== year || newWinner !== winner) {
-      setPage(0);
-      setYear(newYear);
-      setWinner(newWinner);
-    }
+    setFilters(() => ({
+      year: antdFilters.year ? antdFilters.year[0] : null,
+      winner: antdFilters.winner ? (antdFilters.winner[0] === 'true') : null,
+    }));
   };
+
 
   if (isLoading) {
     return <Spin />;
@@ -64,22 +63,23 @@ export default function Movies() {
   const { totalElements } = data || {};
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({
-      setSelectedKeys, selectedKeys, close
-    }) => (
+    filterDropdown: ({ confirm, clearFilters, close }) => (
       <FilterDropdown
-        ref={searchInput}
-        dataIndex={dataIndex}
-        setSelectedKeys={setSelectedKeys}
-        selectedKeys={selectedKeys}
-        confirm={confirm}
-        handleSearch={handleSearch}
-        handleReset={handleReset}
+        dataIndex="year"
+        handleSearch={(value) => {
+          setFilters(prev => ({ ...prev, year: value }));
+          confirm();
+        }}
+        handleReset={() => {
+          setFilters(prev => ({ ...prev, year: null }));
+          clearFilters();
+          confirm();
+        }}
         close={close}
       />
     ),
     filterIcon: () => {
-      const isActiveFilter = dataIndex === 'year' ? year !== null : dataIndex === 'winner' ? winner !== null : false;
+      const isActiveFilter = dataIndex === 'year' ? filters.year !== null : dataIndex === 'winner' ? filters.winner !== null : false;
       return (
         <SearchOutlined
           style={{
@@ -102,7 +102,7 @@ export default function Movies() {
             backgroundColor: '#ffc069',
             padding: 0,
           }}
-          searchWords={[year]}
+          searchWords={[filters.year]}
           autoEscape
           textToHighlight={text ? text.toString() : ''}
         />
@@ -126,7 +126,7 @@ export default function Movies() {
       key: "winner",
       render: (winner) => winner ? 'Yes' : 'No',
       filterIcon: () => {
-        const isActiveFilter = winner !== null;
+        const isActiveFilter = filters.winner !== null;
         if (isActiveFilter) {
           return <FilterFilled />
         } else {
@@ -167,7 +167,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{ total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
+          pagination={{ hideOnSinglePage: true, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
         />
       </Card >

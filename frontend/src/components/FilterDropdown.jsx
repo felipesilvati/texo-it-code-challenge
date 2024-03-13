@@ -1,62 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Space, Input, message } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, RedoOutlined, CloseOutlined } from '@ant-design/icons';
 
 const FilterDropdown = React.forwardRef(({
   dataIndex,
-  setSelectedKeys,
-  selectedKeys,
   handleSearch,
   handleReset,
-  close
+  close,
 }, ref) => {
+  const [inputValue, setInputValue] = useState('');
 
-  const validateAndSearch = (selectedKeys) => {
-    const year = selectedKeys[0];
-    if (!year || isNaN(year) || parseInt(year, 10) < 0) {
+  const validateAndSearch = () => {
+    const year = parseInt(inputValue, 10);
+    if (isNaN(year) || year < 0) {
       message.error('Please enter a valid year');
       return;
     }
 
-    handleSearch(year, dataIndex);
+    handleSearch(inputValue, dataIndex);
+    close();
   };
 
   return (
-    <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+    <div style={{ padding: 8 }}>
       <Input
         ref={ref}
         placeholder={`Search ${dataIndex}`}
-        value={selectedKeys[0]}
-        onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-        onPressEnter={() => validateAndSearch(selectedKeys)}
-        style={{ marginBottom: 8, display: 'block' }}
+        value={inputValue}
+        onChange={e => setInputValue(e.target.value)}
+        onPressEnter={validateAndSearch}
+        style={{ display: 'block', marginBottom: 8 }}
       />
       <Space>
         <Button
           type="primary"
-          onClick={() => validateAndSearch(selectedKeys)}
+          onClick={validateAndSearch}
           icon={<SearchOutlined />}
-          size="small"
-          style={{ width: 90 }}
         >
           Search
         </Button>
         <Button
           onClick={() => {
+            setInputValue('');
             handleReset();
-            setSelectedKeys([]);
-            ref.current.focus();
           }}
-          size="small"
-          style={{ width: 90 }}
+          icon={<RedoOutlined />}
         >
           Reset
         </Button>
         <Button
-          type="link"
-          size="small"
           onClick={close}
-          style={{ width: 90 }}
+          icon={<CloseOutlined />}
         >
           Close
         </Button>
