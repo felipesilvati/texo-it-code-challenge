@@ -14,3 +14,9 @@ export const fetchYearsWithMultipleWinners = () => {
     .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
     .then((res) => res.data?.years)
 };
+
+export const fetchTopThreeStudiosWithWinners = () => {
+  return axios
+    .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
+    .then(res => res.data?.studios?.slice(0, 3))
+};

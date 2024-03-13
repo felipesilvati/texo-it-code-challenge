@@ -4,6 +4,7 @@ import { Button, Typography, Table, Card, InputNumber, Space } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
+import { onError } from '@/utils/helpers';
 const { Text } = Typography;
 
 export default function ListMovieWinnersByYear() {
@@ -15,7 +16,7 @@ export default function ListMovieWinnersByYear() {
       .get(`${BASE_API_URL}/?winner=true&year=${searchYear}`)
       .then((res) => res.data),
     queryKey: ['listMovieWinnersByYear', searchYear],
-    onError: (error) => console.error(error),
+    onError,
     enabled: isSearchYearValid && searchActive,
     onSettled: () => setSearchActive(false),
   });

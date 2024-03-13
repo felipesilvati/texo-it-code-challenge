@@ -7,6 +7,7 @@ import Layout from '@/components/Layout';
 import YearFilterDropdown from '@/components/YearFilterDropdown';
 import WinnerFilterDropdown from '@/components/WinnerFilterDropdown';
 import { fetchMovies } from '@/utils/apiCalls';
+import { onError } from '@/utils/helpers';
 const { Text } = Typography;
 
 export default function Movies() {
@@ -17,7 +18,7 @@ export default function Movies() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['listMovies', page, size, filters],
     queryFn: fetchMovies,
-    onError: () => message.error('Failed to load movies')
+    onError
   });
 
   const handleTableChange = (pagination, antdFilters, sorter) => {

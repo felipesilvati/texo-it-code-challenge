@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Typography, Table, Spin, message } from 'antd';
+import { Card, Typography, Table, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { fetchYearsWithMultipleWinners } from '@/utils/apiCalls';
+import { onError } from '@/utils/helpers';
 
 const { Text } = Typography;
 
@@ -9,7 +10,7 @@ export default function YearsWithMultipleWinnersTable() {
   const { data, isLoading, isError } = useQuery({
     queryFn: fetchYearsWithMultipleWinners,
     queryKey: ['yearsWithMultipleWinners'],
-    onError: () => message.error('Failed to load years with multiple winners'),
+    onError,
   });
 
   if (isLoading) {
