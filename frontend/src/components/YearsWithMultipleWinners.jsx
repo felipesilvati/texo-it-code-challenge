@@ -1,16 +1,13 @@
 import React from 'react';
 import { Card, Typography, Table, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { BASE_API_URL } from '@/utils/constants';
+import { fetchYearsWithMultipleWinners } from '@/utils/apiCalls';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 export default function YearsWithMultipleWinnersTable() {
   const { data, isLoading, isError } = useQuery({
-    queryFn: () => axios
-      .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
-      .then((res) => res.data?.years),
+    queryFn: fetchYearsWithMultipleWinners,
     queryKey: ['yearsWithMultipleWinners'],
     onError: (error) => console.error(error),
   });

@@ -25,7 +25,6 @@ export default function Movies() {
     setSize(pagination.pageSize);
   };
 
-
   if (isLoading) {
     return <Spin />;
   }
