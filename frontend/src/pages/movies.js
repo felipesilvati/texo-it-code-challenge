@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography, Table, Card, Spin } from 'antd';
 import { SearchOutlined, FilterOutlined, FilterFilled } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +15,6 @@ export default function Movies() {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [filters, setFilters] = useState({ year: null, winner: null });
-  const searchInput = useRef(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['listMovies', page, size, filters],
@@ -71,11 +70,6 @@ export default function Movies() {
     },
     onFilter: (value, record) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
   });
 
   const columns = [

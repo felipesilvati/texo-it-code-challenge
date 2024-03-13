@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Button, Space, Input, message } from 'antd';
 import { SearchOutlined, RedoOutlined, CloseOutlined } from '@ant-design/icons';
 
-const FilterDropdown = React.forwardRef(({
+const FilterDropdown = ({
   dataIndex,
   handleSearch,
   handleReset,
   close,
-}, ref) => {
+}) => {
   const [inputValue, setInputValue] = useState('');
 
   const validateAndSearch = () => {
@@ -24,7 +24,6 @@ const FilterDropdown = React.forwardRef(({
   return (
     <div style={{ padding: 8 }}>
       <Input
-        ref={ref}
         placeholder={`Search ${dataIndex}`}
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
@@ -57,6 +56,6 @@ const FilterDropdown = React.forwardRef(({
       </Space>
     </div>
   );
-});
+};
 
 export default FilterDropdown;
