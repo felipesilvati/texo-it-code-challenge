@@ -117,7 +117,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{ hideOnSinglePage: true, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
+          pagination={{ total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
         />
       </Card >
