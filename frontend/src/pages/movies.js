@@ -19,7 +19,7 @@ export default function Movies() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['listMovies', page, size, filters],
     queryFn: () => axios.get(`${BASE_API_URL}${constructQueryString({ page, size, ...filters })}`).then(res => res.data),
-    onError: (error) => console.error(error),
+    onError: () => message.error('Failed to load movies'),
   });
 
   const handleTableChange = (pagination, antdFilters, sorter) => {
