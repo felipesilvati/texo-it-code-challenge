@@ -42,14 +42,15 @@ Please read the respective README files for detailed instructions on setting up 
 
 ### UI Development
 - [x] Implement navigation menu for switching between views
-- [ ] Develop the dashboard view with required panels
+- [x] Develop the dashboard view with required panels
   - [x] Years with more than one winner
   - [x] Top three studios by wins
   - [x] Producers with longest and shortest win intervals
   - [x] Searchable winners by year
+- [ ] Create the movie list view with pagination and filters (year, winner)
 - [ ] Refactor the layout
 - [ ] Extract useQuery hooks to a separate file
-- [ ] Create the movie list view with pagination and filters (year, winner)
+- [ ] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness
 - [ ] Ensure UI is responsive with a minimum resolution of 768x1280

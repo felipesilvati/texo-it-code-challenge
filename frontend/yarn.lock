@@ -1723,6 +1723,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "frontend@workspace:."
   dependencies:
+    "@ant-design/icons": "npm:^5.3.1"
     "@tanstack/react-query": "npm:4.36.1"
     antd: "npm:^5.15.1"
     axios: "npm:^1.6.7"
