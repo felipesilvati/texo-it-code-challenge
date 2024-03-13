@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BASE_API_URL } from '@/utils/constants';
 import Layout from '@/components/Layout';
-import Highlighter from 'react-highlight-words';
 import { constructQueryString } from '@/utils/helpers';
 import FilterDropdown from '@/components/FilterDropdown';
 import WinnerFilterDropdown from '@/components/WinnerFilterDropdown';
@@ -16,7 +15,6 @@ export default function Movies() {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [filters, setFilters] = useState({ year: null, winner: null });
-  const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
 
   const { data, isLoading, isError } = useQuery({
@@ -62,7 +60,7 @@ export default function Movies() {
       />
     ),
     filterIcon: () => {
-      const isActiveFilter = dataIndex === 'year' ? filters.year !== null : dataIndex === 'winner' ? filters.winner !== null : false;
+      const isActiveFilter = filters.year !== null;
       return (
         <SearchOutlined
           style={{
@@ -78,20 +76,6 @@ export default function Movies() {
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{
-            backgroundColor: '#ffc069',
-            padding: 0,
-          }}
-          searchWords={[filters.year]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
   });
 
   const columns = [
@@ -111,7 +95,7 @@ export default function Movies() {
       filterIcon: () => {
         const isActiveFilter = filters.winner !== null;
         if (isActiveFilter) {
-          return <FilterFilled />
+          return <FilterFilled style={{ color: '#1677ff' }} />
         } else {
           return <FilterOutlined style={{ color: '#bfbfbf' }} />
         }
