@@ -24,6 +24,10 @@ const createTestQueryClient = () => new QueryClient({
 });
 
 describe('ListMovieWinnersByYear', () => {
+  beforeEach(() => {
+    fetchMovieWinnersByYear.mockReset();
+  });
+
   it('initially renders with no data', () => {
     const queryClient = createTestQueryClient();
     render(
@@ -35,11 +39,12 @@ describe('ListMovieWinnersByYear', () => {
     expect(screen.getByTestId('search-text')).toBeInTheDocument();
     expect(screen.getByTestId('search-button')).toBeInTheDocument();
     expect(screen.queryByText('No data')).toBeInTheDocument();
+    expect(fetchMovieWinnersByYear).not.toHaveBeenCalled();
   });
 
-  it('renders without crashing', async () => {
+  it('displays a list of movie winners when the search button is clicked', async () => {
     fetchMovieWinnersByYear.mockResolvedValue([
-      { id: 1, year: 2020, title: 'Movie Title' }
+      { id: 1, year: 1989, title: 'Movie Title' }
     ]);
     const queryClient = createTestQueryClient();
     render(
@@ -53,6 +58,28 @@ describe('ListMovieWinnersByYear', () => {
     expect(input.value).toBe('1989');
     fireEvent.click(screen.getByTestId('search-button'));
 
+    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(1989);
+    expect(await screen.findByText('Movie Title')).toBeInTheDocument();
+  });
+
+  it('triggers search when Enter is pressed', async () => {
+    fetchMovieWinnersByYear.mockResolvedValue([
+      { id: 1, year: 1989, title: 'Movie Title' }
+    ]);
+
+    const queryClient = createTestQueryClient();
+    render(
+      <QueryClientProvider client={queryClient}>
+        <ListMovieWinnersByYear />
+      </QueryClientProvider>
+    );
+
+    const input = screen.getByTestId('search-text');
+    fireEvent.change(input, { target: { value: '1989' } });
+
+    fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+
+    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(1989);
     expect(await screen.findByText('Movie Title')).toBeInTheDocument();
   });
 
