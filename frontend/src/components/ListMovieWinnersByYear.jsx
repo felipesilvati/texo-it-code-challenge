@@ -10,13 +10,15 @@ export default function ListMovieWinnersByYear() {
   const [searchYear, setSearchYear] = useState('');
   const [searchActive, setSearchActive] = useState(false);
   const isSearchYearValid = !!searchYear && !isNaN(searchYear) && parseInt(searchYear, 10) > 0;
-  const { data, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryFn: () => fetchMovieWinnersByYear(searchYear),
     queryKey: ['listMovieWinnersByYear', searchYear],
     onError,
     enabled: isSearchYearValid && searchActive,
     onSettled: () => setSearchActive(false),
   });
+
+  const loading = searchActive && isLoading;
 
   if (error) {
     return <Text data-testid='error-message'>Failed to load movie winners by year</Text>;
@@ -32,7 +34,7 @@ export default function ListMovieWinnersByYear() {
     <Card style={{ marginTop: 16, width: 550 }} title='List movie winners by year'>
       <Space.Compact style={{ width: '100%', marginBottom: 16 }}>
         <InputNumber data-testid='search-text' style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' onPressEnter={() => setSearchActive(true)} />
-        <Button data-testid='search-button' type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
+        <Button data-testid='search-button' type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid} loading={loading}>Search</Button>
       </Space.Compact>
       <Table
         style={{ width: 500 }}

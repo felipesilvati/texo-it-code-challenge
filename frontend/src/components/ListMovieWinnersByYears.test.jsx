@@ -53,6 +53,25 @@ describe('ListMovieWinnersByYear', () => {
     expect(fetchMovieWinnersByYear).not.toHaveBeenCalled();
   });
 
+  it('shows the button in loading state when search is active', () => {
+    // Temporarily mock fetchMovieWinnersByYear to delay the response
+    fetchMovieWinnersByYear.mockImplementation(() => new Promise(resolve => setTimeout(() => resolve([movieData]), 100)));
+
+    renderListMovieWinnersByYear();
+    searchForYear(movieData.year);
+
+    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(movieData.year);
+    expect(screen.getByTestId('search-button')).toHaveClass('ant-btn-loading');
+  });
+
+  it('displays a message when no movie winners are found for the specified year', async () => {
+    fetchMovieWinnersByYear.mockResolvedValue([]);
+    renderListMovieWinnersByYear();
+    searchForYear(movieData.year);
+
+    expect(await screen.findByText('No data')).toBeInTheDocument();
+  });
+
   it('displays a list of movie winners when the search button is clicked', async () => {
     fetchMovieWinnersByYear.mockResolvedValue([movieData]);
     renderListMovieWinnersByYear();
@@ -76,4 +95,13 @@ describe('ListMovieWinnersByYear', () => {
     expect(await screen.findByText('Failed to load data')).toBeInTheDocument();
     expect(await screen.getByTestId('error-message')).toBeInTheDocument();
   });
+
+  it('does not trigger search with invalid year input', async () => {
+    const invalidYear = 'notAYear';
+    renderListMovieWinnersByYear();
+    searchForYear(invalidYear);
+
+    expect(fetchMovieWinnersByYear).not.toHaveBeenCalled();
+  });
+
 });
