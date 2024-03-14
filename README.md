@@ -55,4 +55,10 @@ Please read the respective README files for detailed instructions on setting up 
 - [ ] Ensure UI is responsive with a minimum resolution of 768x1280
 
 ### Testing
-- [ ] Write unit tests for UI components and functionality
+- [x] Write unit tests for UI components and functionality
+
+### Documentation
+- [ ] Document setup, usage instructions, and design decisions
+
+## General
+- [ ] Comment on the rationale behind the design and implementation
