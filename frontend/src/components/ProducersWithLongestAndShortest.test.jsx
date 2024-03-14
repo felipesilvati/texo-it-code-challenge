@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { createTestQueryClient } from '@/utils/testHelper';
+import { createTestQueryClient } from '@/utils/testHelpers';
 import ProducersWithLongestAndShortest from './ProducersWithLongestAndShortest';
 import { QueryClientProvider } from '@tanstack/react-query';
 

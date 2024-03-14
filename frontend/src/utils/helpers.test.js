@@ -9,6 +9,11 @@ jest.mock('antd', () => ({
 }));
 
 describe('constructQueryString', () => {
+  it('returns an empty string for empty parameters', () => {
+    const params = {};
+    const expectedQueryString = '';
+    expect(constructQueryString(params)).toEqual(expectedQueryString);
+  })
   it('constructs a query string from object parameters', () => {
     const params = {
       page: 1,

@@ -8,7 +8,7 @@ jest.mock('@/utils/apiCalls', () => ({
 }));
 
 import { fetchMovieWinnersByYear } from '@/utils/apiCalls';
-import { createTestQueryClient } from '@/utils/testHelper';
+import { createTestQueryClient } from '@/utils/testHelpers';
 
 function renderListMovieWinnersByYear() {
   const queryClient = createTestQueryClient();
