@@ -109,6 +109,7 @@ export default function Movies() {
           columns={columns}
           pagination={{current: page + 1, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
+          rowKey='id'
         />
       </Card >
     </Layout>

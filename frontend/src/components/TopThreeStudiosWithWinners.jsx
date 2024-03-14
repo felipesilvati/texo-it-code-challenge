@@ -41,6 +41,7 @@ export default function TopThreeStudiosWithWinnersTable() {
         dataSource={data}
         columns={columns}
         pagination={{ hideOnSinglePage: true }}
+        rowKey='name'
       />
     </Card>
   );

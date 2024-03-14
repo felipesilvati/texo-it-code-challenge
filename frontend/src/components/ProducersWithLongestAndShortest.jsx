@@ -37,6 +37,7 @@ export default function ProducersWithLongestAndShortest() {
           dataSource={data?.max}
           columns={columns}
           pagination={{ hideOnSinglePage: true }}
+          rowKey='producer'
         />
 
         <Table
@@ -45,6 +46,7 @@ export default function ProducersWithLongestAndShortest() {
           dataSource={data?.min}
           columns={columns}
           pagination={{ hideOnSinglePage: true }}
+          rowKey='producer'
         />
       </Flex>
     </Card>

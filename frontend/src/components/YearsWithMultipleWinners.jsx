@@ -41,6 +41,7 @@ export default function YearsWithMultipleWinnersTable() {
         dataSource={data}
         columns={columns}
         pagination={{ hideOnSinglePage: true }}
+        rowKey='year'
       />
     </Card>
   );
