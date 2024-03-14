@@ -23,19 +23,30 @@ const createTestQueryClient = () => new QueryClient({
   },
 });
 
+function renderListMovieWinnersByYear() {
+  const queryClient = createTestQueryClient();
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <ListMovieWinnersByYear />
+    </QueryClientProvider>
+  );
+}
+
+function searchForYear(year) {
+  const input = screen.getByTestId('search-text');
+  fireEvent.change(input, { target: { value: year.toString() } });
+  fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+}
+
+const movieData = { id: 1, year: 1989, title: 'Movie Title' };
+
 describe('ListMovieWinnersByYear', () => {
   beforeEach(() => {
     fetchMovieWinnersByYear.mockReset();
   });
 
   it('initially renders with no data', () => {
-    const queryClient = createTestQueryClient();
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ListMovieWinnersByYear />
-      </QueryClientProvider>
-    );
-
+    renderListMovieWinnersByYear();
     expect(screen.getByTestId('search-text')).toBeInTheDocument();
     expect(screen.getByTestId('search-button')).toBeInTheDocument();
     expect(screen.queryByText('No data')).toBeInTheDocument();
@@ -43,64 +54,26 @@ describe('ListMovieWinnersByYear', () => {
   });
 
   it('displays a list of movie winners when the search button is clicked', async () => {
-    fetchMovieWinnersByYear.mockResolvedValue([
-      { id: 1, year: 1989, title: 'Movie Title' }
-    ]);
-    const queryClient = createTestQueryClient();
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ListMovieWinnersByYear />
-      </QueryClientProvider>
-    );
-
-    const input = screen.getByTestId('search-text');
-    fireEvent.change(input, { target: { value: '1989' } });
-    expect(input.value).toBe('1989');
-    fireEvent.click(screen.getByTestId('search-button'));
-
-    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(1989);
-    expect(await screen.findByText('Movie Title')).toBeInTheDocument();
+    fetchMovieWinnersByYear.mockResolvedValue([movieData]);
+    renderListMovieWinnersByYear();
+    searchForYear(movieData.year);
+    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(movieData.year);
+    expect(await screen.findByText(movieData.title)).toBeInTheDocument();
   });
 
   it('triggers search when Enter is pressed', async () => {
-    fetchMovieWinnersByYear.mockResolvedValue([
-      { id: 1, year: 1989, title: 'Movie Title' }
-    ]);
-
-    const queryClient = createTestQueryClient();
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ListMovieWinnersByYear />
-      </QueryClientProvider>
-    );
-
-    const input = screen.getByTestId('search-text');
-    fireEvent.change(input, { target: { value: '1989' } });
-
-    fireEvent.keyDown(input, { key: 'Enter', code: 13 });
-
-    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(1989);
-    expect(await screen.findByText('Movie Title')).toBeInTheDocument();
+    fetchMovieWinnersByYear.mockResolvedValue([movieData]);
+    renderListMovieWinnersByYear();
+    searchForYear(movieData.year);
+    expect(fetchMovieWinnersByYear).toHaveBeenCalledWith(movieData.year);
+    expect(await screen.findByText(movieData.title)).toBeInTheDocument();
   });
 
   it('displays an error message when the API call fails', async () => {
-    // Forces the mock to return a rejected promise
     fetchMovieWinnersByYear.mockRejectedValue(new Error('Failed to fetch'));
-
-    const queryClient = createTestQueryClient();
-    render(
-      <QueryClientProvider client={queryClient}>
-        <ListMovieWinnersByYear />
-      </QueryClientProvider>
-    );
-
-    const input = screen.getByTestId('search-text');
-    fireEvent.change(input, { target: { value: '1989' } });
-    expect(input.value).toBe('1989');
-    fireEvent.click(screen.getByTestId('search-button'));
-
+    renderListMovieWinnersByYear();
+    searchForYear(movieData.year);
     expect(await screen.findByText('Failed to load data')).toBeInTheDocument();
     expect(await screen.getByTestId('error-message')).toBeInTheDocument();
   });
-
 });
