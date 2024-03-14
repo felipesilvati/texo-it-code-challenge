@@ -10,7 +10,7 @@ export default function ListMovieWinnersByYear() {
   const [searchYear, setSearchYear] = useState('');
   const [searchActive, setSearchActive] = useState(false);
   const isSearchYearValid = !!searchYear && !isNaN(searchYear) && parseInt(searchYear, 10) > 0;
-  const { data, isError } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryFn: () => fetchMovieWinnersByYear(searchYear),
     queryKey: ['listMovieWinnersByYear', searchYear],
     onError,
@@ -18,8 +18,10 @@ export default function ListMovieWinnersByYear() {
     onSettled: () => setSearchActive(false),
   });
 
-  if (isError) {
-    return <Text>Failed to  load movie winners by year</Text>;
+  const loading = searchActive && isLoading;
+
+  if (error) {
+    return <Text data-testid='error-message'>Failed to load movie winners by year</Text>;
   }
 
   const columns = [
@@ -31,14 +33,15 @@ export default function ListMovieWinnersByYear() {
   return (
     <Card style={{ marginTop: 16, width: 550 }} title='List movie winners by year'>
       <Space.Compact style={{ width: '100%', marginBottom: 16 }}>
-        <InputNumber style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' onPressEnter={() => setSearchActive(true)} />
-        <Button type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
+        <InputNumber data-testid='search-text' style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' onPressEnter={() => setSearchActive(true)} />
+        <Button data-testid='search-button' type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid} loading={loading}>Search</Button>
       </Space.Compact>
       <Table
         style={{ width: 500 }}
         dataSource={data}
         columns={columns}
         pagination={{ hideOnSinglePage: true }}
+        rowKey='id'
       />
     </Card >
   );

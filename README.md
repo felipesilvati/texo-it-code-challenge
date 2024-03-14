@@ -48,7 +48,7 @@ Please read the respective README files for detailed instructions on setting up 
   - [x] Searchable winners by year
 - [x] Create the movie list view with pagination and filters (year, winner)
 - [x] Extract useQuery hooks to a separate file
-- [ ] Investigate warning: Each child in a list should have a unique "key" prop
+- [x] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness
 - [ ] Refactor the layout
