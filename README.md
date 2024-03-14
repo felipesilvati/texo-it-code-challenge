@@ -37,7 +37,7 @@ Please read the respective README files for detailed instructions on setting up 
 
 ### Project Setup
 - [x] Initialize React project with necessary tooling
-- [x] Install essential libraries 
+- [x] Install essential libraries
 
 ### UI Development
 - [x] Implement navigation menu for switching between views
@@ -47,7 +47,7 @@ Please read the respective README files for detailed instructions on setting up 
   - [x] Producers with longest and shortest win intervals
   - [x] Searchable winners by year
 - [x] Create the movie list view with pagination and filters (year, winner)
-- [ ] Extract useQuery hooks to a separate file
+- [x] Extract useQuery hooks to a separate file
 - [ ] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness

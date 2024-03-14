@@ -20,3 +20,8 @@ export const fetchTopThreeStudiosWithWinners = () => {
     .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
     .then(res => res.data?.studios?.slice(0, 3))
 };
+
+export const fetchMovieWinnersByYear = (searchYear) => {
+  return axios.get(`${BASE_API_URL}/?winner=true&year=${searchYear}`)
+    .then(res => res.data)
+};
