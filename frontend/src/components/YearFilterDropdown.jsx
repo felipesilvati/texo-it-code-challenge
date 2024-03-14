@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Space, Input, message } from 'antd';
 import { SearchOutlined, RedoOutlined, CloseOutlined } from '@ant-design/icons';
 
-const FilterDropdown = ({
+const YearFilterDropdown = ({
   dataIndex,
   handleSearch,
   handleReset,
@@ -58,4 +58,4 @@ const FilterDropdown = ({
   );
 };
 
-export default FilterDropdown;
+export default YearFilterDropdown;

@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { Typography, Table, Card, Spin } from 'antd';
 import { SearchOutlined, FilterOutlined, FilterFilled } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { BASE_API_URL } from '@/utils/constants';
 import Layout from '@/components/Layout';
-import { constructQueryString } from '@/utils/helpers';
-import FilterDropdown from '@/components/FilterDropdown';
+import YearFilterDropdown from '@/components/YearFilterDropdown';
 import WinnerFilterDropdown from '@/components/WinnerFilterDropdown';
+import { fetchMovies } from '@/utils/apiCalls';
+import { onError } from '@/utils/helpers';
 const { Text } = Typography;
 
 export default function Movies() {
@@ -18,20 +17,14 @@ export default function Movies() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['listMovies', page, size, filters],
-    queryFn: () => axios.get(`${BASE_API_URL}${constructQueryString({ page, size, ...filters })}`).then(res => res.data),
-    onError: () => message.error('Failed to load movies'),
+    queryFn: fetchMovies,
+    onError
   });
 
   const handleTableChange = (pagination, antdFilters, sorter) => {
     setPage(pagination.current - 1);
     setSize(pagination.pageSize);
-
-    setFilters(() => ({
-      year: antdFilters.year ? antdFilters.year[0] : null,
-      winner: antdFilters.winner ? (antdFilters.winner[0] === 'true') : null,
-    }));
   };
-
 
   if (isLoading) {
     return <Spin />;
@@ -45,14 +38,16 @@ export default function Movies() {
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ close }) => (
-      <FilterDropdown
+      <YearFilterDropdown
         dataIndex="year"
         handleSearch={(value) => {
           setFilters(prev => ({ ...prev, year: value }));
+          setPage(0);
           close();
         }}
         handleReset={() => {
           setFilters(prev => ({ ...prev, year: null }));
+          setPage(0);
           close();
         }}
         close={close}
@@ -98,6 +93,7 @@ export default function Movies() {
         <WinnerFilterDropdown
           close={close}
           setFilters={setFilters}
+          setPage={setPage}
           dataIndex="winner"
         />
       ),
@@ -111,7 +107,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{ total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
+          pagination={{current: page + 1, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
         />
       </Card >

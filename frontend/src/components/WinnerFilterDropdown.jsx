@@ -3,12 +3,13 @@ import React from 'react';
 import { Button, Radio, Space } from 'antd';
 import { RedoOutlined, CloseOutlined } from '@ant-design/icons';
 
-const WinnerFilterDropdown = ({ setFilters, close }) => {
+const WinnerFilterDropdown = ({ setFilters, setPage, close }) => {
   const [checked, setChecked] = React.useState(null);
   return (
     <div style={{ padding: 8 }}>
       <Radio.Group
         onChange={e => {
+          setPage(0);
           const winner = e.target.value;
           setFilters(currentFilters => ({
             ...currentFilters,
@@ -27,6 +28,7 @@ const WinnerFilterDropdown = ({ setFilters, close }) => {
         <Button
           icon={<RedoOutlined />}
           onClick={() => {
+            setPage(0);
             setFilters(currentFilters => ({ ...currentFilters, winner: null }));
             setChecked(null);
             close();

@@ -1,18 +1,16 @@
 import React from 'react';
 import { Card, Typography, Table, Spin } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { BASE_API_URL } from '@/utils/constants';
+import { fetchTopThreeStudiosWithWinners } from '@/utils/apiCalls';
+import { onError } from '@/utils/helpers';
 
 const { Text } = Typography;
 
 export default function TopThreeStudiosWithWinnersTable() {
   const { data, isLoading, isError } = useQuery({
-    queryFn: () => axios
-      .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
-      .then((res) => res.data?.studios?.slice(0, 3)),
+    queryFn: fetchTopThreeStudiosWithWinners,
     queryKey: ['studiosWithWinCount'],
-    onError: (error) => console.error(error),
+    onError,
   });
 
   if (isLoading) {
