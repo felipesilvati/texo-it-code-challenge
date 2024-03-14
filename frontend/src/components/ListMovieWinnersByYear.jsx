@@ -10,7 +10,7 @@ export default function ListMovieWinnersByYear() {
   const [searchYear, setSearchYear] = useState('');
   const [searchActive, setSearchActive] = useState(false);
   const isSearchYearValid = !!searchYear && !isNaN(searchYear) && parseInt(searchYear, 10) > 0;
-  const { data, isError } = useQuery({
+  const { data, error } = useQuery({
     queryFn: () => fetchMovieWinnersByYear(searchYear),
     queryKey: ['listMovieWinnersByYear', searchYear],
     onError,
@@ -18,8 +18,8 @@ export default function ListMovieWinnersByYear() {
     onSettled: () => setSearchActive(false),
   });
 
-  if (isError) {
-    return <Text>Failed to  load movie winners by year</Text>;
+  if (error) {
+    return <Text data-testid='error-message'>Failed to load movie winners by year</Text>;
   }
 
   const columns = [
