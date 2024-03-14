@@ -8,5 +8,7 @@ export const constructQueryString = (params) => {
 
 export const onError = (error) => {
   message.error('Failed to load data')
-  console.error(error);
+  if (process.env.NODE_ENV !== 'test') {
+    console.error(error);
+  }
 };
