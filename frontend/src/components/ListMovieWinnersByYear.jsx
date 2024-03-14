@@ -31,14 +31,15 @@ export default function ListMovieWinnersByYear() {
   return (
     <Card style={{ marginTop: 16, width: 550 }} title='List movie winners by year'>
       <Space.Compact style={{ width: '100%', marginBottom: 16 }}>
-        <InputNumber style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' onPressEnter={() => setSearchActive(true)} />
-        <Button type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
+        <InputNumber data-testid='search-text' style={{ width: '100%' }} min={1} max={new Date().getFullYear()} onChange={setSearchYear} value={searchYear} placeholder='Search by year' onPressEnter={() => setSearchActive(true)} />
+        <Button data-testid='search-button' type='primary' onClick={() => setSearchActive(true)} disabled={!isSearchYearValid}>Search</Button>
       </Space.Compact>
       <Table
         style={{ width: 500 }}
         dataSource={data}
         columns={columns}
         pagination={{ hideOnSinglePage: true }}
+        rowKey='id'
       />
     </Card >
   );
