@@ -6,18 +6,18 @@ import { onError } from '@/utils/helpers';
 
 const { Text } = Typography;
 
-export default function YearsWithMultipleWinnersTable() {
-  const { data, isLoading, isError } = useQuery({
+export default function YearsWithMultipleWinners() {
+  const { data, isLoading, error } = useQuery({
     queryFn: fetchYearsWithMultipleWinners,
     queryKey: ['yearsWithMultipleWinners'],
     onError,
   });
 
   if (isLoading) {
-    return <Spin />;
+    return <Spin data-testid='loading-spinner' />;
   }
 
-  if (isError) {
+  if (error) {
     return <Text>Failed to load years with multiple winners</Text>;
   }
 
