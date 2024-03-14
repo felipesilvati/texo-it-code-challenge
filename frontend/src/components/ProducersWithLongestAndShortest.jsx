@@ -1,17 +1,14 @@
 import React from 'react';
 import { Typography, Table, Spin, Card, Flex } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { BASE_API_URL } from '@/utils/constants';
 import { onError } from '@/utils/helpers';
+import { fetchProducersWithLongestAndShortestIntervals } from '@/utils/apiCalls';
 
 const { Text, Title } = Typography;
 
 export default function ProducersWithLongestAndShortest() {
   const { data, isLoading, isError } = useQuery({
-    queryFn: () => axios
-      .get(`${BASE_API_URL}/?projection=max-min-win-interval-for-producers`)
-      .then((res) => res.data),
+    queryFn: fetchProducersWithLongestAndShortestIntervals,
     queryKey: ['maxMinWinIntervalForProducers'],
     onError,
   });

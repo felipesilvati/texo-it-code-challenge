@@ -25,3 +25,8 @@ export const fetchMovieWinnersByYear = (searchYear) => {
   return axios.get(`${BASE_API_URL}/?winner=true&year=${searchYear}`)
     .then(res => res.data)
 };
+
+export const fetchProducersWithLongestAndShortestIntervals = () => {
+  return axios.get(`${BASE_API_URL}/?projection=max-min-win-interval-for-producers`)
+    .then(res => res.data)
+};
