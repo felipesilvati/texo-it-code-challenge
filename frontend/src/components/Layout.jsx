@@ -17,10 +17,10 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Title style={{ width: '100%', background: '#ececec', padding: '16px', fontSize: '1.5em' }}>
+      <Title style={{ width: '100%', background: '#ececec', padding: 16, fontSize: '1.5em', marginTop: 0 }}>
         Frontend React Test
       </Title>
-      <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', minHeight: '100vh', marginLeft: 16 }}>
         <aside style={{ width: '150px', flexShrink: 0 }}>
           <Menu
             onClick={handleMenuClick}
