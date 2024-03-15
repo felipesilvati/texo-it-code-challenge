@@ -31,6 +31,11 @@ function renderMovies() {
 describe('movies page', () => {
   beforeEach(() => {
     fetchMovies.mockReset();
+
+    fetchMovies.mockResolvedValue({
+      totalElements: 0,
+      content: [],
+    });
   })
   describe('fetching data', () => {
     it('renders a loading spinner when movies are being fetched', () => {
@@ -48,10 +53,6 @@ describe('movies page', () => {
 
   describe('filtering', () => {
     it('fetches movies with correct initial parameters', async () => {
-      fetchMovies.mockResolvedValue({
-        totalElements: 0,
-        content: [],
-      });
       renderMovies();
       expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
         queryKey: ['listMovies', 0, 10, { year: null, winner: null }]
@@ -60,18 +61,6 @@ describe('movies page', () => {
 
     describe('year filter', () => {
       it('fetches movies with the correct year filter when a year is selected', async () => {
-        fetchMovies.mockResolvedValue({
-          totalElements: 0,
-          content: [
-            {
-              id: 1,
-              title: 'Movie 1',
-              year: '1989',
-              winner: true,
-            }
-          ],
-        });
-
         const { findByTestId } = renderMovies();
 
         const yearFilterButton = await findByTestId('year-filter-icon');
@@ -96,11 +85,6 @@ describe('movies page', () => {
       });
 
       it('resets the year filter when the reset button is clicked', async () => {
-        fetchMovies.mockResolvedValue({
-          totalElements: 0,
-          content: [],
-        });
-
         const { findByTestId } = renderMovies();
 
         const yearFilterIcon = await findByTestId('year-filter-icon');
@@ -136,11 +120,6 @@ describe('movies page', () => {
 
     describe('winner filter', () => {
       it('fetches movies with the correct winner filter when a winner is selected', async () => {
-        fetchMovies.mockResolvedValue({
-          totalElements: 0,
-          content: [],
-        });
-
         const { findByTestId, findByLabelText } = renderMovies();
 
         const winnerFilterIcon = await findByTestId('winner-filter-icon');
@@ -157,14 +136,37 @@ describe('movies page', () => {
           queryKey: ['listMovies', 0, 10, { year: null, winner: 'true' }]
         }));
       });
+
+      it('resets the winner filter when the reset button is clicked', async () => {
+        const { findByTestId, findByLabelText } = renderMovies();
+
+        const winnerFilterIcon = await findByTestId('winner-filter-icon');
+        await act(async () => {
+          fireEvent.click(winnerFilterIcon);
+        });
+
+        const winnerYesOption = await findByLabelText(/Yes/i);
+        await act(async () => {
+          fireEvent.click(winnerYesOption);
+        });
+
+        const winnerFilterIconAgain = await findByTestId('winner-filter-icon');
+        await act(async () => {
+          fireEvent.click(winnerFilterIconAgain);
+        });
+
+        const resetButton = await findByTestId('reset-button');
+        await act(async () => {
+          fireEvent.click(resetButton);
+        });
+
+        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+          queryKey: ['listMovies', 0, 10, { year: null, winner: null }]
+        }));
+      })
     });
 
     it('applies both year and winner filters when both are selected', async () => {
-      fetchMovies.mockResolvedValue({
-        totalElements: 0,
-        content: [],
-      });
-
       const { findByTestId, findByLabelText } = renderMovies();
 
       const yearFilterIcon = await findByTestId('year-filter-icon');
@@ -242,15 +244,6 @@ describe('movies page', () => {
 
     it('fetches the previous page when the previous page button is clicked', async () => {
       const { findByRole } = renderMovies();
-      fetchMovies.mockResolvedValue({
-        totalElements: 50,
-        content: Array(10).fill().map((_, index) => ({
-          id: index,
-          title: `Movie ${index}`,
-          year: `Year ${index}`,
-          winner: index % 2 === 0,
-        })),
-      });
 
       const nextPageButton = await findByRole('listitem', { name: /next page/i });
 
