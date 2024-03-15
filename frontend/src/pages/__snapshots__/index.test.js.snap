@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="ant-flex css-dev-only-do-not-override-1uweeqc ant-flex-gap-large"
+    >
+      <div
+        data-testid="YearsWithMultipleWinners"
+      />
+      <div
+        data-testid="TopThreeStudiosWithWinners"
+      />
+    </div>
+    <div
+      class="ant-flex css-dev-only-do-not-override-1uweeqc ant-flex-gap-large"
+    >
+      <div
+        data-testid="ProducersWithLongestAndShortest"
+      />
+      <div
+        data-testid="ListMovieWinnersByYear"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
