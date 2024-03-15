@@ -29,12 +29,14 @@ const YearFilterDropdown = ({
         onChange={e => setInputValue(e.target.value)}
         onPressEnter={validateAndSearch}
         style={{ display: 'block', marginBottom: 8 }}
+        data-testid="year-input"
       />
       <Space>
         <Button
           type="primary"
           onClick={validateAndSearch}
           icon={<SearchOutlined />}
+          data-testid="search-button"
         >
           Search
         </Button>
@@ -44,12 +46,14 @@ const YearFilterDropdown = ({
             handleReset();
           }}
           icon={<RedoOutlined />}
+          data-testid="reset-button"
         >
           Reset
         </Button>
         <Button
           onClick={close}
           icon={<CloseOutlined />}
+          data-testid="close-button"
         >
           Close
         </Button>

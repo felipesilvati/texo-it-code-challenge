@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Radio, Space } from 'antd';
 import { RedoOutlined, CloseOutlined } from '@ant-design/icons';
 
-const WinnerFilterDropdown = ({ setFilters, setPage, close }) => {
+export default function WinnerFilterDropdown({ setFilters, setPage, close }) {
   const [checked, setChecked] = React.useState(null);
   return (
     <div style={{ padding: 8 }}>
@@ -34,6 +34,7 @@ const WinnerFilterDropdown = ({ setFilters, setPage, close }) => {
             close();
           }}
           size="small"
+          data-testid="reset-button"
         >
           Reset
         </Button>
@@ -41,6 +42,7 @@ const WinnerFilterDropdown = ({ setFilters, setPage, close }) => {
           icon={<CloseOutlined />}
           onClick={close}
           size="small"
+          data-testid="close-button"
         >
           Close
         </Button>
@@ -48,5 +50,3 @@ const WinnerFilterDropdown = ({ setFilters, setPage, close }) => {
     </div>
   );
 };
-
-export default WinnerFilterDropdown;

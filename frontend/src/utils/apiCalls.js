@@ -11,22 +11,22 @@ export const fetchMovies = ({ queryKey }) => {
 
 export const fetchYearsWithMultipleWinners = () => {
   return axios
-    .get(`${BASE_API_URL}/?projection=years-with-multiple-winners`)
+    .get(`${BASE_API_URL}?projection=years-with-multiple-winners`)
     .then((res) => res.data?.years)
 };
 
 export const fetchTopThreeStudiosWithWinners = () => {
   return axios
-    .get(`${BASE_API_URL}/?projection=studios-with-win-count`)
+    .get(`${BASE_API_URL}?projection=studios-with-win-count`)
     .then(res => res.data?.studios?.slice(0, 3))
 };
 
 export const fetchMovieWinnersByYear = (searchYear) => {
-  return axios.get(`${BASE_API_URL}/?winner=true&year=${searchYear}`)
+  return axios.get(`${BASE_API_URL}?winner=true&year=${searchYear}`)
     .then(res => res.data)
 };
 
 export const fetchProducersWithLongestAndShortestIntervals = () => {
-  return axios.get(`${BASE_API_URL}/?projection=max-min-win-interval-for-producers`)
+  return axios.get(`${BASE_API_URL}?projection=max-min-win-interval-for-producers`)
     .then(res => res.data)
 };

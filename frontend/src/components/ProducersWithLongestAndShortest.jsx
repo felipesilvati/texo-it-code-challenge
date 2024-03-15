@@ -14,7 +14,7 @@ export default function ProducersWithLongestAndShortest() {
   });
 
   if (isLoading) {
-    return <Spin />;
+    return <Spin data-testid='loading-spinner' />;
   }
 
   if (isError) {

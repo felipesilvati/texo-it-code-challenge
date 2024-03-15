@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import ListMovieWinnersByYear from '@/components/ListMovieWinnersByYear';
 
 jest.mock('@/utils/apiCalls', () => ({
@@ -8,20 +8,7 @@ jest.mock('@/utils/apiCalls', () => ({
 }));
 
 import { fetchMovieWinnersByYear } from '@/utils/apiCalls';
-
-const createTestQueryClient = () => new QueryClient({
-  logger: {
-    log: console.log,
-    warn: console.warn,
-    // ✅ no more errors on the console for tests
-    error: process.env.NODE_ENV === 'test' ? () => { } : console.error,
-  },
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
+import { createTestQueryClient } from '@/utils/testHelpers';
 
 function renderListMovieWinnersByYear() {
   const queryClient = createTestQueryClient();

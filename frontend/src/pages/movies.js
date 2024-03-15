@@ -27,14 +27,12 @@ export default function Movies() {
   };
 
   if (isLoading) {
-    return <Spin />;
+    return <Spin data-testid='loading-spinner' />;
   }
 
   if (isError) {
     return <Text>Failed to  load movies</Text>;
   }
-
-  const { totalElements } = data || {};
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ close }) => (
@@ -51,6 +49,7 @@ export default function Movies() {
           close();
         }}
         close={close}
+        data-testid="year-filter-dropdown"
       />
     ),
     filterIcon: () => {
@@ -60,11 +59,10 @@ export default function Movies() {
           style={{
             color: isActiveFilter ? '#1677ff' : undefined,
           }}
+          data-testid='year-filter-icon'
         />
       )
     },
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
   });
 
   const columns = [
@@ -84,9 +82,9 @@ export default function Movies() {
       filterIcon: () => {
         const isActiveFilter = filters.winner !== null;
         if (isActiveFilter) {
-          return <FilterFilled style={{ color: '#1677ff' }} />
+          return <FilterFilled style={{ color: '#1677ff' }} data-testid='winner-filter-icon' />
         } else {
-          return <FilterOutlined style={{ color: '#bfbfbf' }} />
+          return <FilterOutlined style={{ color: '#bfbfbf' }} data-testid='winner-filter-icon' />
         }
       },
       filterDropdown: ({ close }) => (
@@ -95,6 +93,7 @@ export default function Movies() {
           setFilters={setFilters}
           setPage={setPage}
           dataIndex="winner"
+          data-testid="winner-filter-dropdown"
         />
       ),
       filters: [{ text: 'Yes', value: true }, { text: 'No', value: false }],
@@ -107,7 +106,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{current: page + 1, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
+          pagination={{current: page + 1, total: data?.totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
           rowKey='id'
         />
