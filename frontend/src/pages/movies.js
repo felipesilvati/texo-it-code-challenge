@@ -27,11 +27,11 @@ export default function Movies() {
   };
 
   if (isLoading) {
-    return <Spin data-testid='loading-spinner' />;
+    return <Layout><Spin data-testid='loading-spinner' /></Layout>
   }
 
   if (isError) {
-    return <Text>Failed to  load movies</Text>;
+    return <Layout><Text>Failed to  load movies</Text></Layout>
   }
 
   const getColumnSearchProps = (dataIndex) => ({
@@ -102,7 +102,7 @@ export default function Movies() {
 
   return (
     <Layout>
-      <Card style={{ marginTop: 16 }} title='List movies'>
+      <Card title='List movies'>
         <Table
           dataSource={data?.content}
           columns={columns}

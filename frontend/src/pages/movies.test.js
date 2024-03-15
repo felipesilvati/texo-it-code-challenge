@@ -1,4 +1,4 @@
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent, waitFor } from '@testing-library/react';
 import Movies from './movies';
 import { fetchMovies } from '@/utils/apiCalls';
 import { createTestQueryClient } from '@/utils/testHelpers';
@@ -38,10 +38,12 @@ describe('movies page', () => {
     });
   })
   describe('fetching data', () => {
-    it('renders a loading spinner when movies are being fetched', () => {
+    it('renders a loading spinner when movies are being fetched', async () => {
       fetchMovies.mockReturnValue(new Promise(() => { }));
       const { getByTestId } = renderMovies();
-      expect(getByTestId('loading-spinner')).toBeInTheDocument();
+      await waitFor(() =>
+        expect(getByTestId('loading-spinner')).toBeInTheDocument()
+      );
     });
 
     it('renders an error message when movies fail to load', async () => {
@@ -54,9 +56,9 @@ describe('movies page', () => {
   describe('filtering', () => {
     it('fetches movies with correct initial parameters', async () => {
       renderMovies();
-      expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+      await waitFor(() => expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
         queryKey: ['listMovies', 0, 10, { year: null, winner: null }]
-      }));
+      })));
     });
 
     describe('year filter', () => {

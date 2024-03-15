@@ -2,6 +2,7 @@
 import { useRouter } from 'next/router';
 import { Menu, Typography } from 'antd';
 const { Title } = Typography;
+import Head from 'next/head'
 
 const items = [
   { label: 'Dashboard', key: '/' },
@@ -17,11 +18,12 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <Title style={{ width: '100%', background: '#ececec', padding: '16px', fontSize: '1.5em' }}>
+      <Head><title>Frontend React Test</title></Head>
+      <Title style={{ width: '100%', background: '#ececec', padding: 16, fontSize: '1.5em', marginTop: 0 }}>
         Frontend React Test
       </Title>
-      <div style={{ display: 'flex', minHeight: '100vh' }}>
-        <aside style={{ width: '256px', flexShrink: 0 }}>
+      <div style={{ display: 'flex', minHeight: '100vh', marginLeft: 16 }}>
+        <aside style={{ width: '150px', flexShrink: 0 }}>
           <Menu
             onClick={handleMenuClick}
             mode='inline'

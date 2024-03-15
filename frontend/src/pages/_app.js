@@ -1,5 +1,6 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './global.css';
 
 function MyApp({ Component, pageProps }) {
   const queryClient = new QueryClient({
