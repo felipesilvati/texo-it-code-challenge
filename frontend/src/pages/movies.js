@@ -102,7 +102,7 @@ export default function Movies() {
 
   return (
     <Layout>
-      <Card style={{ marginTop: 16 }} title='List movies'>
+      <Card title='List movies'>
         <Table
           dataSource={data?.content}
           columns={columns}

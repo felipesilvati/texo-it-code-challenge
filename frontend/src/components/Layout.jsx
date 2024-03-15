@@ -2,6 +2,7 @@
 import { useRouter } from 'next/router';
 import { Menu, Typography } from 'antd';
 const { Title } = Typography;
+import Head from 'next/head'
 
 const items = [
   { label: 'Dashboard', key: '/' },
@@ -17,6 +18,7 @@ export default function Layout({ children }) {
 
   return (
     <>
+      <Head><title>Frontend React Test</title></Head>
       <Title style={{ width: '100%', background: '#ececec', padding: 16, fontSize: '1.5em', marginTop: 0 }}>
         Frontend React Test
       </Title>
