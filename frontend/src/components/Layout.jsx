@@ -21,7 +21,7 @@ export default function Layout({ children }) {
         Frontend React Test
       </Title>
       <div style={{ display: 'flex', minHeight: '100vh' }}>
-        <aside style={{ width: '256px', flexShrink: 0 }}>
+        <aside style={{ width: '150px', flexShrink: 0 }}>
           <Menu
             onClick={handleMenuClick}
             mode='inline'

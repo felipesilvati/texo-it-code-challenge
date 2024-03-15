@@ -1,5 +1,4 @@
 'use client';
-import { Flex } from 'antd'
 import Layout from '@/components/Layout';
 import YearsWithMultipleWinners from '@/components/YearsWithMultipleWinners';
 import TopThreeStudiosWithWinners from '@/components/TopThreeStudiosWithWinners';
@@ -7,17 +6,23 @@ import ProducersWithLongestAndShortest from '@/components/ProducersWithLongestAn
 import ListMovieWinnersByYear from '@/components/ListMovieWinnersByYear';
 
 export default function Dashboard() {
+  const flexContainerStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '16px',
+    justifyContent: 'center'
+  };
+
   return (
     <Layout>
-      <Flex gap='large'>
+      <div style={flexContainerStyle}>
         <YearsWithMultipleWinners />
         <TopThreeStudiosWithWinners />
-      </Flex>
-
-      <Flex gap='large'>
+      </div>
+      <div style={flexContainerStyle}>
         <ProducersWithLongestAndShortest />
         <ListMovieWinnersByYear />
-      </Flex>
-    </Layout>
+      </div>
+    </Layout >
   );
 }
