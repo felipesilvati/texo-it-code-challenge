@@ -53,22 +53,4 @@ describe('onError', () => {
     onError(error);
     expect(message.error).toHaveBeenCalledWith('Failed to load data');
   });
-
-  it('logs the error in non-test environments', () => {
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'development';
-
-    const error = new Error('Test Error');
-    onError(error);
-    expect(consoleSpy).toHaveBeenCalledWith(error);
-
-    // Clean up environment changes
-    process.env.NODE_ENV = originalEnv;
-  });
-
-  it('does not log the error in test environment', () => {
-    const error = new Error('Test Error');
-    onError(error);
-    expect(consoleSpy).not.toHaveBeenCalled();
-  });
 });

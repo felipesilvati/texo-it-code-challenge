@@ -34,8 +34,6 @@ export default function Movies() {
     return <Text>Failed to  load movies</Text>;
   }
 
-  const { totalElements } = data || {};
-
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ close }) => (
       <YearFilterDropdown
@@ -65,8 +63,6 @@ export default function Movies() {
         />
       )
     },
-    onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
   });
 
   const columns = [
@@ -110,7 +106,7 @@ export default function Movies() {
         <Table
           dataSource={data?.content}
           columns={columns}
-          pagination={{current: page + 1, total: totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
+          pagination={{current: page + 1, total: data?.totalElements, showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} movies` }}
           onChange={handleTableChange}
           rowKey='id'
         />
