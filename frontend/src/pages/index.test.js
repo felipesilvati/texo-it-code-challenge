@@ -4,11 +4,26 @@ import { useRouter } from 'next/router';
 import Dashboard from '@/pages/index';
 import { createTestQueryClient } from '@/utils/testHelpers';
 
-jest.mock('@/components/YearsWithMultipleWinners', () => () => <div data-testid="YearsWithMultipleWinners" />);
-jest.mock('@/components/TopThreeStudiosWithWinners', () => () => <div data-testid="TopThreeStudiosWithWinners" />);
-jest.mock('@/components/ProducersWithLongestAndShortest', () => () => <div data-testid="ProducersWithLongestAndShortest" />);
-jest.mock('@/components/ListMovieWinnersByYear', () => () => <div data-testid="ListMovieWinnersByYear" />);
-jest.mock('@/components/Layout', () => ({ children }) => <div>{children}</div>);
+const YearsWithMultipleWinnersMock = () => <div data-testid="YearsWithMultipleWinners" />;
+YearsWithMultipleWinnersMock.displayName = 'YearsWithMultipleWinnersMock';
+jest.mock('@/components/YearsWithMultipleWinners', () => YearsWithMultipleWinnersMock);
+
+const TopThreeStudiosWithWinnersMock = () => <div data-testid="TopThreeStudiosWithWinners" />;
+TopThreeStudiosWithWinnersMock.displayName = 'TopThreeStudiosWithWinnersMock';
+jest.mock('@/components/TopThreeStudiosWithWinners', () => TopThreeStudiosWithWinnersMock);
+
+const ProducersWithLongestAndShortestMock = () => <div data-testid="ProducersWithLongestAndShortest" />;
+ProducersWithLongestAndShortestMock.displayName = 'ProducersWithLongestAndShortestMock';
+jest.mock('@/components/ProducersWithLongestAndShortest', () => ProducersWithLongestAndShortestMock);
+
+const ListMovieWinnersByYearMock = () => <div data-testid="ListMovieWinnersByYear" />;
+ListMovieWinnersByYearMock.displayName = 'ListMovieWinnersByYearMock';
+jest.mock('@/components/ListMovieWinnersByYear', () => ListMovieWinnersByYearMock);
+
+const LayoutMock = ({ children }) => <div>{children}</div>;
+LayoutMock.displayName = 'LayoutMock';
+jest.mock('@/components/Layout', () => LayoutMock);
+
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
