@@ -51,6 +51,7 @@ export default function Movies() {
           close();
         }}
         close={close}
+        data-testid="year-filter-dropdown"
       />
     ),
     filterIcon: () => {
@@ -60,6 +61,7 @@ export default function Movies() {
           style={{
             color: isActiveFilter ? '#1677ff' : undefined,
           }}
+          data-testid='year-filter-icon'
         />
       )
     },
@@ -84,9 +86,9 @@ export default function Movies() {
       filterIcon: () => {
         const isActiveFilter = filters.winner !== null;
         if (isActiveFilter) {
-          return <FilterFilled style={{ color: '#1677ff' }} />
+          return <FilterFilled style={{ color: '#1677ff' }} data-testid='winner-filter-icon' />
         } else {
-          return <FilterOutlined style={{ color: '#bfbfbf' }} />
+          return <FilterOutlined style={{ color: '#bfbfbf' }} data-testid='winner-filter-icon' />
         }
       },
       filterDropdown: ({ close }) => (
@@ -95,6 +97,7 @@ export default function Movies() {
           setFilters={setFilters}
           setPage={setPage}
           dataIndex="winner"
+          data-testid="winner-filter-dropdown"
         />
       ),
       filters: [{ text: 'Yes', value: true }, { text: 'No', value: false }],
