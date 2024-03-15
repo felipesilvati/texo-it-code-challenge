@@ -27,7 +27,7 @@ export default function Movies() {
   };
 
   if (isLoading) {
-    return <Spin />;
+    return <Spin data-testid='loading-spinner' />;
   }
 
   if (isError) {

@@ -7,7 +7,7 @@ import { onError } from '@/utils/helpers';
 const { Text } = Typography;
 
 export default function TopThreeStudiosWithWinners() {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryFn: fetchTopThreeStudiosWithWinners,
     queryKey: ['studiosWithWinCount'],
     onError,
@@ -17,7 +17,7 @@ export default function TopThreeStudiosWithWinners() {
     return <Spin data-testid='loading-spinner' />;
   }
 
-  if (error) {
+  if (isError) {
     return <Text>Failed to load studios with win count</Text>;
   }
 

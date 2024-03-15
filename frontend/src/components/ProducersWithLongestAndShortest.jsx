@@ -7,7 +7,7 @@ import { fetchProducersWithLongestAndShortestIntervals } from '@/utils/apiCalls'
 const { Text, Title } = Typography;
 
 export default function ProducersWithLongestAndShortest() {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryFn: fetchProducersWithLongestAndShortestIntervals,
     queryKey: ['maxMinWinIntervalForProducers'],
     onError,
@@ -17,7 +17,7 @@ export default function ProducersWithLongestAndShortest() {
     return <Spin data-testid='loading-spinner' />;
   }
 
-  if (error) {
+  if (isError) {
     return <Text>Failed to load producers with longest and shortest win intervals</Text>;
   }
 
