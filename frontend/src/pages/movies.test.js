@@ -1,4 +1,4 @@
-import { render, act, waitFor, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
 import Movies from './movies';
 import { fetchMovies } from '@/utils/apiCalls';
 import { createTestQueryClient } from '@/utils/testHelpers';
@@ -90,13 +90,49 @@ describe('movies page', () => {
           fireEvent.click(searchButton);
         });
 
-        await waitFor(() => {
-          expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
-            queryKey: ['listMovies', 0, 10, { year: '1989', winner: null }]
-          }));
-        });
+        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+          queryKey: ['listMovies', 0, 10, { year: '1989', winner: null }]
+        }));
       });
-    });
+
+      it('resets the year filter when the reset button is clicked', async () => {
+        fetchMovies.mockResolvedValue({
+          totalElements: 0,
+          content: [],
+        });
+
+        const { findByTestId } = renderMovies();
+
+        const yearFilterIcon = await findByTestId('year-filter-icon');
+        await act(async () => {
+          fireEvent.click(yearFilterIcon);
+        });
+
+        const yearInput = await findByTestId('year-input');
+        await act(async () => {
+          fireEvent.change(yearInput, { target: { value: '1989' } });
+        });
+
+        const yearSearchButton = await findByTestId('search-button');
+        await act(async () => {
+          fireEvent.click(yearSearchButton);
+        });
+
+        const yearFilterIconAgain = await findByTestId('year-filter-icon');
+        await act(async () => {
+          fireEvent.click(yearFilterIconAgain);
+        });
+
+        const resetButton = await findByTestId('reset-button');
+        await act(async () => {
+          fireEvent.click(resetButton);
+        });
+
+        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+          queryKey: ['listMovies', 0, 10, { year: null, winner: null }]
+        }));
+      })
+    })
 
     describe('winner filter', () => {
       it('fetches movies with the correct winner filter when a winner is selected', async () => {
@@ -107,25 +143,19 @@ describe('movies page', () => {
 
         const { findByTestId, findByLabelText } = renderMovies();
 
-        // First, click the winner filter icon to display the winner filter options
         const winnerFilterIcon = await findByTestId('winner-filter-icon');
         await act(async () => {
           fireEvent.click(winnerFilterIcon);
         });
 
-        // Now that the filter options are visible, click on the "Yes" radio button
         const winnerYesOption = await findByLabelText(/Yes/i);
         await act(async () => {
           fireEvent.click(winnerYesOption);
         });
 
-        // After clicking "Yes", the dropdown should automatically close, and the filter should be applied
-        // So, we wait for fetchMovies to be called with the updated filters
-        await waitFor(() => {
-          expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
-            queryKey: ['listMovies', 0, 10, { year: null, winner: 'true' }] // Assuming 'true' as a string based on your WinnerFilterDropdown component's logic
-          }));
-        });
+        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+          queryKey: ['listMovies', 0, 10, { year: null, winner: 'true' }]
+        }));
       });
     });
 
@@ -137,13 +167,11 @@ describe('movies page', () => {
 
       const { findByTestId, findByLabelText } = renderMovies();
 
-      // First, click the year filter icon to display the year filter options
       const yearFilterIcon = await findByTestId('year-filter-icon');
       await act(async () => {
         fireEvent.click(yearFilterIcon);
       });
 
-      // Now that the filter options are visible, enter a year and click the search button
       const yearInput = await findByTestId('year-input');
       await act(async () => {
         fireEvent.change(yearInput, { target: { value: '1989' } });
@@ -154,28 +182,21 @@ describe('movies page', () => {
         fireEvent.click(yearSearchButton);
       });
 
-      // Now, click the winner filter icon to display the winner filter options
       const winnerFilterIcon = await findByTestId('winner-filter-icon');
       await act(async () => {
         fireEvent.click(winnerFilterIcon);
       });
 
-      // Now that the filter options are visible, click on the "Yes" radio button
       const winnerYesOption = await findByLabelText(/Yes/i);
       await act(async () => {
         fireEvent.click(winnerYesOption);
       });
 
-      // After clicking "Yes", the dropdown should automatically close, and the filter should be applied
-      // So, we wait for fetchMovies to be called with the updated filters
-      await waitFor(() => {
-        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
-          queryKey: ['listMovies', 0, 10, { year: '1989', winner: 'true' }] // Assuming 'true' as a string based on your WinnerFilterDropdown component's logic
-        }));
-      });
+      expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({
+        queryKey: ['listMovies', 0, 10, { year: '1989', winner: 'true' }]
+      }));
     })
-
-  })
+  });
 
   describe('pagination', () => {
     beforeEach(() => {
@@ -216,9 +237,7 @@ describe('movies page', () => {
         nextPageButton.click();
       })
 
-      await waitFor(() => {
-        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({ queryKey: ['listMovies', 1, 10, { year: null, winner: null }] }))
-      })
+      expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({ queryKey: ['listMovies', 1, 10, { year: null, winner: null }] }))
     });
 
     it('fetches the previous page when the previous page button is clicked', async () => {
@@ -245,9 +264,7 @@ describe('movies page', () => {
         previousPageButton.click();
       })
 
-      await waitFor(() => {
-        expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({ queryKey: ['listMovies', 0, 10, { year: null, winner: null }] }))
-      })
+      expect(fetchMovies).toHaveBeenCalledWith(expect.objectContaining({ queryKey: ['listMovies', 0, 10, { year: null, winner: null }] }))
     });
   });
 })
