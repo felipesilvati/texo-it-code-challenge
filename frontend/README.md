@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend - ReactJS Application
+
+This project is bootstrapped with [Next.js](https://nextjs.org/) using [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), designed to showcase the nominees and winners of the Golden Raspberry Awards in a user-friendly interface.
 
 ## Getting Started
 
@@ -16,21 +18,33 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+In the project directory, you can run:
 
-## Learn More
+### `yarn dev`
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+### `yarn build`
+Builds the app for production to the `.next` folder.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `yarn start`
+Starts the application in production mode. The application should be compiled with `yarn build` first.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `yarn lint`
+Runs the linter for your code and shows any linting errors.
 
-## Deploy on Vercel
+### `yarn test`
+Runs the test runner once.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `yarn test:watch`
+Runs the test runner in the interactive watch mode.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Development Philosophy
+
+- **Functionality First**: The primary focus was on ensuring that the API calls function correctly and that data is accurately rendered in the app, prioritizing functionality to adhere closely to the provided prototypes.
+- **Utilizing Ant Design**: The application leverages Ant Design for UI components, chosen for its efficiency and alignment with the project's design requirements.
+- **Simplistic UI Approach**: A straightforward UI was intentionally chosen to keep the application user-friendly and closely matched with the design prototypes, ensuring ease of use and clarity.
+- **Comprehensive Testing**: With 100% line coverage, tests were written for various scenarios, including loading states, errors, and data filtering, demonstrating a commitment to reliability and quality.
+- **Future Considerations**: While the current focus is on functionality and testing, enhancements could include more attention to visual design, incorporation of Storybook for component documentation, snapshot testing, and integration of CI/CD pipelines for automated testing and deployment.

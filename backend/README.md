@@ -1,4 +1,4 @@
-# Backend Python/Flask Application
+# Backend - Python/Flask Application
 
 This document provides setup and operational guidance for the backend component of this application, developed using Python and Flask. It covers environment setup, application execution, and testing procedures.
 

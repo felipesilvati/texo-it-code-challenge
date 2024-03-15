@@ -51,14 +51,11 @@ Please read the respective README files for detailed instructions on setting up 
 - [x] Investigate warning: Each child in a list should have a unique "key" prop
 
 ### Responsiveness
-- [ ] Refactor the layout
-- [ ] Ensure UI is responsive with a minimum resolution of 768x1280
+- [x] Refactor the layout
+- [x] Ensure UI is responsive with a minimum resolution of 768x1280
 
 ### Testing
 - [x] Write unit tests for UI components and functionality
 
 ### Documentation
-- [ ] Document setup, usage instructions, and design decisions
-
-## General
-- [ ] Comment on the rationale behind the design and implementation
+- [x] Document setup, usage instructions, and design decisions
