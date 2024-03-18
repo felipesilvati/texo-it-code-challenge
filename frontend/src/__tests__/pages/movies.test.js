@@ -1,5 +1,5 @@
 import { render, act, fireEvent, waitFor } from '@testing-library/react';
-import Movies from './movies';
+import Movies from '../../pages/movies';
 import { fetchMovies } from '@/utils/apiCalls';
 import { createTestQueryClient } from '@/utils/testHelpers';
 import { QueryClientProvider } from '@tanstack/react-query';
